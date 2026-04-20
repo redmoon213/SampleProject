@@ -1,5 +1,7 @@
 #include<iostream>
 #include<string>
+#include<cstdlib>
+#include<ctime>
 
 using namespace std;
 
@@ -142,6 +144,29 @@ int main() {
 	}
 	else {
 		cout << "[System] You defeated the Golbin!\n";
+
+		srand((unsigned int)time(NULL));
+
+		cout << "------------Looting Items------------\n";
+
+		for (int i = 1; i <= 3; i++) {
+			int lootRoll = rand() % 4;
+			string itemName;
+
+			if (lootRoll == 0) itemName = "Gold";
+			else if (lootRoll == 1) itemName = "Healing Potion";
+			else if (lootRoll == 2) itemName = "Weapon";
+			else itemName = "Armor";
+
+
+			cout << i << ". Get [" << itemName << "]\n";
+
+
+
+		}
+
+		cout << "------------------------------------\n";
+
 	}
 
 
