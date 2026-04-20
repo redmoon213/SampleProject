@@ -17,7 +17,14 @@ int main() {
 	int vitality = 50;
 	int energy = 50;
 
+	int fireResist = 0;
+	int lightningResist = 0;
+	int coldResist = 0;
+	int poisonResist = 0 ;
+
 	bool isHardcore = true;
+
+	
 
 	cout << "[ Character Creation ]\n";
 	cout << "Input your name : ";
@@ -37,6 +44,12 @@ int main() {
 	cout << "Dexterity : " << dexterity << "\n";
 	cout << "Vitality : " << vitality << "\n";
 	cout << "Energy : " << energy << "\n";
+
+	cout << "Fire Resistance : " << fireResist << "\n";
+	cout << "Lightning Resistance : " << lightningResist << "\n";
+	cout << "Cold Resistance : " << coldResist << "\n";
+	cout << "Poison Resistance : " << poisonResist << "\n";
+
 	cout << "Hardcore Mode : " << isHardcore << " (1: true, 0: flase)\n";
 	cout << "------------------------------------------------\n";
 
