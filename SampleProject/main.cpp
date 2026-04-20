@@ -2,47 +2,71 @@
 #include<string>
 #include<cstdlib>
 #include<ctime>
+#include<iomanip>
 
 using namespace std;
 
-int main() {
+// 화면을 지우는 함수
+void clearScreen() {
+#ifdef _WIN32
+	system("cls");
+#else
+	system("clear");
+#endif
+}
 
+// 체력 게이지 출력 함수 (ASCII 버전)
+// 한글 폭 문제를 피하기 위해 라벨과 게이지를 정교하게 계산
+void drawGauge(string label, int current, int max) {
+	int width = 20;
+	float ratio = (float)current / max;
+	if (ratio < 0) ratio = 0;
+	int filled = (int)(width * ratio);
+
+	// 라벨 영문 10칸 고정
+	cout << "| " << left << setw(10) << label << " [";
+	for (int i = 0; i < width; i++) {
+		if (i < filled) cout << "#";
+		else cout << " ";
+	}
+	// 수치 부분 7칸 + 테두리 마무리
+	cout << "] " << right << setw(3) << current << "/" << left << setw(3) << max << " |\n";
+}
+
+int main() {
 	char userName[50];
-	//char charactorClass[50];
 	string charactorClass;
 	int classChoiceInput;
-
 	char isHardcoreInput;
-	int strength = 50;
-	int dexterity = 50;
-	int vitality = 50;
-	int energy = 50;
+	int strength = 50, dexterity = 50, vitality = 50, energy = 50;
 
 	int level = 1;
-	int hp = vitality * 2;
+	int maxHp = vitality * 2;
+	int hp = maxHp;
 	int mp = energy * 1.5;
 	float attackDamage = strength * 0.2;
 	float attackSpeed = dexterity / 10.0;
 	double movingSpeed = dexterity / 30.0;
 
-
-	int fireResist = 0;
-	int lightningResist = 0;
-	int coldResist = 0;
-	int poisonResist = 0 ;
-
 	bool isHardcore = true;
 
-	
-
-	cout << "[ Character Creation ]\n";
-	cout << "Input your name : ";
+	// [SCENE 1: Character Creation]
+	clearScreen();
+	cout << "################################################\n";
+	cout << "#                                              #\n";
+	cout << "#         DIABLO-STYLE RPG PROJECT v1.0        #\n";
+	cout << "#                                              #\n";
+	cout << "################################################\n\n";
+	cout << " [1] CHARACTER CREATION\n";
+	cout << " ----------------------------------------------\n";
+	cout << "  > Input your name : ";
 	cin >> userName;
-	//cout << "Input your Class : ";
-	//cin >> charactorClass;
-	cout << "Select your Class\n";
-	cout << "1. Amazon\n2. Assasin\n3. Barbarian\n4. Druid\n5. Necromancer\n6. Paladin\n7. Sorceress\n8. Warlock\n";
-	cout << "input Class Number : ";
+
+	cout << "\n [2] SELECT YOUR CLASS\n";
+	cout << "  1. Amazon     2. Assassin    3. Barbarian \n";
+	cout << "  4. Druid      5. Necro       6. Paladin   \n";
+	cout << "  7. Sorceress  8. Warlock\n";
+	cout << "  > Choice : ";
 	cin >> classChoiceInput;
 
 	switch (classChoiceInput) {
@@ -54,122 +78,131 @@ int main() {
 	case 6: charactorClass = "Paladin"; break;
 	case 7: charactorClass = "Sorceress"; break;
 	case 8: charactorClass = "Warlock"; break;
-	default:
-		charactorClass = "Unknown";
-		cout << "[System] Invalid choice. Defaulting to Unknown.\n";
-		break;
+	default: charactorClass = "Unknown"; break;
 	}
 
-
-
-	cout << "Enable Hardcore Mode? (1) Yes / (2) No\n";
+	cout << "\n [3] GAME MODE\n";
+	cout << "  Enable Hardcore? (1) Yes / (2) No : ";
 	cin >> isHardcoreInput;
+	isHardcore = (isHardcoreInput == '1');
 
-	if (isHardcoreInput == '1') {
-		isHardcore = true;
-		cout << "[System] Hardcore mode enabled, Death is permanent.\n";
-	}
-	else if (isHardcoreInput == '2') {
-		isHardcore = false;
-		cout << "[System] Standard mode enabled.\n";
-	}
-	else{
-		isHardcore = false;
-		cout << "[System] Invalid input. Defaulting to Standard mode.\n";
-	}
+	// [SCENE 2: Status Window]
+	clearScreen();
+	cout << "################################################\n";
+	cout << "#               CHARACTER STATUS               #\n";
+	cout << "################################################\n";
+	cout << "| NAME   : " << left << setw(36) << userName << "|\n";
+	cout << "| CLASS  : " << left << setw(36) << charactorClass << "|\n";
+	// 한글이 포함된 행은 수동으로 여백 조정 (한글은 영문 2칸 취급)
+	if (isHardcore)
+		cout << "| MODE   : HARDCORE (Permadeath)               |\n";
+	else
+		cout << "| MODE   : STANDARD                            |\n";
+	cout << "|----------------------------------------------|\n";
+	drawGauge("LIFE", hp, maxHp);
+	cout << "|----------------------------------------------|\n";
+	// 수치 행들 (setw 간격 재조정)
+	cout << "| STR : " << left << setw(7) << strength << " | DEX : " << left << setw(7) << dexterity << " | VIT : " << left << setw(6) << vitality << " |\n";
+	cout << "| ATK : " << left << setw(7) << attackDamage << " | SPD : " << left << setw(7) << attackSpeed << " | NRG : " << left << setw(6) << energy << " |\n";
+	cout << "################################################\n";
+	cout << "\n [Press Any Key to Start Adventure...]\n";
+	system("pause > nul");
 
+	// [SCENE 3: Battle]
+	int maxGoblinHp = 30;
+	int goblinHp = maxGoblinHp;
+	int action = 0;
+	bool isFirstTurn = true;
 
-	cout << "\n:::::::: Welcome to the Sanctuary ::::::::\n";
-	cout << "User Name : [" << userName << "]\n";
-	
-	cout << "----------------Character Status----------------\n";
-	cout << "Class : " << charactorClass << "\n";
-	cout << "Level : " << level << "\n";
-	cout << "Hp : " << hp << "\n";
-	cout << "MP : " << mp << "\n";
-	
-	cout << "Attack Damage : " << attackDamage << "\n";
-	cout << "Attack Speed : " << attackSpeed << "\n";
-	cout << "Moving Speed : " << movingSpeed << "\n";
-
-	cout << "Strength : " << strength << "\n";
-	cout << "Dexterity : " << dexterity << "\n";
-	cout << "Vitality : " << vitality << "\n";
-	cout << "Energy : " << energy << "\n";
-
-	cout << "Fire Resistance : " << fireResist << "\n";
-	cout << "Lightning Resistance : " << lightningResist << "\n";
-	cout << "Cold Resistance : " << coldResist << "\n";
-	cout << "Poison Resistance : " << poisonResist << "\n";
-
-	cout << "Hardcore Mode : " << isHardcore << " (1: true, 0: false)\n";
-	cout << "------------------------------------------------\n";
-
-	cout << "[Memory Check] int type size : " << sizeof(hp) << "bytes\n";
-	cout << "[Memory Check] bool type size : " << sizeof(isHardcore) << "bytes\n";
-
-
-	int goblinHp = 30;
-	int action;
-
-	cout << "\n[System] You encountered a Goblin\n";
 
 	while (goblinHp > 0 && hp > 0) {
-		cout << "\n[ Goblin HP : " << goblinHp << " | My HP : " << hp << " ]\n";
-		cout << "1. Attack : ";
+		
+		clearScreen();
+		cout << "################################################\n";
+		cout << "#                BATTLE FIELD                  #\n";
+		cout << "################################################\n";
+		cout << "|                                              |\n";
+		cout << "|      (o_o)  < \"Gimme your gold!\"             |\n";
+		cout << "|      /| |\\                                   |\n";
+		cout << "|       | |            [A Goblin Approaches]   |\n";
+		cout << "|----------------------------------------------|\n";
+		drawGauge("PLAYER", hp, maxHp);
+		drawGauge("GOBLIN", goblinHp, maxGoblinHp);
+		cout << "|----------------------------------------------|\n";
+		cout << "|  1. Attack                                   |\n";
+		cout << "|                                              |\n";
+		cout << "################################################\n";
+		
+		if (action == 1) {
+			
+			if (goblinHp < 0) goblinHp = 0;
+			cout << "\n >> You dealt " << attackDamage << " damage to Goblin!\n";
+			if (goblinHp > 0) {
+				
+				
+				cout << " >> Goblin counter-attacks! You take 30 damage.\n";
+			}
+		}
+
+		else if(isFirstTurn!=true){
+
+			
+			cout << "\n >> You hesitated! Goblin attacks you! (-30 HP)\n";
+		}
+
+		cout << " > Action: ";
 		cin >> action;
 
 		if (action == 1) {
-			goblinHp -= attackDamage;
-			cout << "=> You attacked the Goblin! (-" << attackDamage << ")\n";
-
+			goblinHp -= (int)attackDamage;
+			
 			if (goblinHp > 0) {
 				hp -= 30;
-				cout << "=> The Goblin attacked you (-30)\n";
+				if (hp < 0) hp = 0;
 			}
-
 		}
-
 		else {
-			cout << "=> Invalid action! You stumbled and the Golbin seized the chance!\n";
 			hp -= 30;
-			cout << "=> The Golbin attacked you! (-30)\n";
+			if (hp < 0) hp = 0;
 		}
 
-	}
+		isFirstTurn = false;
+			
+		
+			
 
-	cout << "\n";
+			
+
+		}
+		
+
+		
+
+	
+
+	// [SCENE 4: Result]
+	clearScreen();
+	cout << "################################################\n";
 	if (hp <= 0) {
-		cout << "[System] You Died..\n";
+		cout << "#                                              #\n";
+		cout << "#                Y O U  D I E D                #\n";
+		cout << "#                                              #\n";
+		cout << "################################################\n";
 	}
 	else {
-		cout << "[System] You defeated the Golbin!\n";
-
+		cout << "#               V I C T O R Y !                #\n";
+		cout << "################################################\n";
 		srand((unsigned int)time(NULL));
-
-		cout << "------------Looting Items------------\n";
-
+		cout << "|                                              |\n";
+		cout << "| [LOOT FOUND]                                 |\n";
 		for (int i = 1; i <= 3; i++) {
-			int lootRoll = rand() % 4;
-			string itemName;
-
-			if (lootRoll == 0) itemName = "Gold";
-			else if (lootRoll == 1) itemName = "Healing Potion";
-			else if (lootRoll == 2) itemName = "Weapon";
-			else itemName = "Armor";
-
-
-			cout << i << ". Get [" << itemName << "]\n";
-
-
-
+			string items[] = { "Gold Coin", "Red Potion", "Small Sword", "Old Shield" };
+			// 아이템 영문 표기로 통일하여 테두리 유지
+			cout << "|  " << i << ". " << left << setw(41) << items[rand() % 4] << "|\n";
 		}
-
-		cout << "------------------------------------\n";
-
+		cout << "|                                              |\n";
+		cout << "################################################\n";
 	}
-
-
 
 	return 0;
 }
