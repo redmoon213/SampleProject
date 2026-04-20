@@ -7,15 +7,18 @@ int main() {
 	char userName[50];
 	char charactorClass[50];
 
-	int level = 1;
-	int hp = 100;
-	int mp = 100;
-	float attackSpeed = 5.5f;
-
 	int strength = 50;
 	int dexterity = 50;
 	int vitality = 50;
 	int energy = 50;
+
+	int level = 1;
+	int hp = vitality * 2;
+	int mp = energy * 1.5;
+	float attackDamage = strength * 0.2;
+	float attackSpeed = dexterity / 10.0;
+	double movingSpeed = dexterity / 30.0;
+
 
 	int fireResist = 0;
 	int lightningResist = 0;
@@ -39,7 +42,11 @@ int main() {
 	cout << "Level : " << level << "\n";
 	cout << "Hp : " << hp << "\n";
 	cout << "MP : " << mp << "\n";
+	
+	cout << "Attack Damage : " << attackDamage << "\n";
 	cout << "Attack Speed : " << attackSpeed << "\n";
+	cout << "Moving Speed : " << movingSpeed << "\n";
+
 	cout << "Strength : " << strength << "\n";
 	cout << "Dexterity : " << dexterity << "\n";
 	cout << "Vitality : " << vitality << "\n";
@@ -55,7 +62,6 @@ int main() {
 
 	cout << "[Memory Check] int type size : " << sizeof(hp) << "bytes\n";
 	cout << "[Memory Check] bool type size : " << sizeof(isHardcore) << "bytes\n";
-
 
 
 	return 0;
