@@ -107,5 +107,44 @@ int main() {
 	cout << "[Memory Check] bool type size : " << sizeof(isHardcore) << "bytes\n";
 
 
+	int goblinHp = 30;
+	int action;
+
+	cout << "\n[System] You encountered a Goblin\n";
+
+	while (goblinHp > 0 && hp > 0) {
+		cout << "\n[ Goblin HP : " << goblinHp << " | My HP : " << hp << " ]\n";
+		cout << "1. Attack : ";
+		cin >> action;
+
+		if (action == 1) {
+			goblinHp -= attackDamage;
+			cout << "=> You attacked the Goblin! (-" << attackDamage << ")\n";
+
+			if (goblinHp > 0) {
+				hp -= 30;
+				cout << "=> The Goblin attacked you (-30)\n";
+			}
+
+		}
+
+		else {
+			cout << "=> Invalid action! You stumbled and the Golbin seized the chance!\n";
+			hp -= 30;
+			cout << "=> The Golbin attacked you! (-30)\n";
+		}
+
+	}
+
+	cout << "\n";
+	if (hp <= 0) {
+		cout << "[System] You Died..\n";
+	}
+	else {
+		cout << "[System] You defeated the Golbin!\n";
+	}
+
+
+
 	return 0;
 }
