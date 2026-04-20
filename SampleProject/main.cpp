@@ -6,7 +6,7 @@ int main() {
 
 	char userName[50];
 	char charactorClass[50];
-
+	char isHardcoreInput;
 	int strength = 50;
 	int dexterity = 50;
 	int vitality = 50;
@@ -34,6 +34,24 @@ int main() {
 	cin >> userName;
 	cout << "Input your Class : ";
 	cin >> charactorClass;
+
+	cout << "Enable Hardcore Mode? (1) Yes / (2) No\n";
+	cin >> isHardcoreInput;
+
+	if (isHardcoreInput == '1') {
+		isHardcore = true;
+		cout << "[System] Hardcore mode enabled, Death is permanent.\n";
+	}
+	else if (isHardcoreInput == '2') {
+		isHardcore = false;
+		cout << "[System] Standard mode enabled.\n";
+	}
+	else{
+		isHardcore = false;
+		cout << "[System] Invalid input. Defaulting to Standard mode.\n";
+	}
+
+
 	cout << "\n:::::::: Welcome to the Sanctuary ::::::::\n";
 	cout << "User Name : [" << userName << "]\n";
 	
@@ -57,7 +75,7 @@ int main() {
 	cout << "Cold Resistance : " << coldResist << "\n";
 	cout << "Poison Resistance : " << poisonResist << "\n";
 
-	cout << "Hardcore Mode : " << isHardcore << " (1: true, 0: flase)\n";
+	cout << "Hardcore Mode : " << isHardcore << " (1: true, 0: false)\n";
 	cout << "------------------------------------------------\n";
 
 	cout << "[Memory Check] int type size : " << sizeof(hp) << "bytes\n";
