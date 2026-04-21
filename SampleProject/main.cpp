@@ -50,6 +50,11 @@ int main() {
 
 	bool isHardcore = true;
 
+	cout << "hp 변수의 값 : " << hp << "\n";
+	cout << "hp 변수의 주소값 : " << &hp << "\n"; // 변수의 주소값 출력
+	system("pause");	// 확인을 위해 잠시 퍼즈 
+
+
 	// [SCENE 1: Character Creation]
 	clearScreen();
 	cout << "################################################\n";
