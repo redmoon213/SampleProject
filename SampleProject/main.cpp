@@ -82,9 +82,19 @@ int main() {
 
 	//포인터 연산 실습(ptr + 1 -> 자료형 크기만큼 이동하게됨)
 	cout << "ptr : " << ptr << "\n";
-	cout << "ptr : " << ptr + 1 << "\n";
-	cout << "ptr : " << ptr + 2 << "\n";
+	cout << "ptr+1 : " << ptr + 1 << "\n";
+	cout << "ptr+2 : " << ptr + 2 << "\n";
 	system("pause");
+
+	//배열구조 실습 - 주소값
+	int scores[5] = { 85, 92, 78, 95, 88 };
+	cout << "&scores[0] : " << &scores[0] << "\n";
+	cout << "&scores[1] : " << &scores[1] << "\n";
+	cout << "&scores[2] : " << &scores[2] << "\n";
+	cout << "&scores[3] : " << &scores[3] << "\n";
+	cout << "&scores[4] : " << &scores[4] << "\n";
+	system("pause");
+
 
 	// [SCENE 1: Character Creation]
 	clearScreen();
