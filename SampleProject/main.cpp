@@ -30,7 +30,7 @@ void drawGauge(string label, int current, int max) {
 		else cout << " ";
 	}
 	// 수치 부분 7칸 + 테두리 마무리
-	cout << "] " << right << setw(3) << current << "/" << left << setw(3) << max << " |\n";
+	cout << "] " << right << setw(5) << current << "/" << left << setw(4) << max << " |\n";
 }
 
 int main() {
@@ -39,8 +39,9 @@ int main() {
 	string charactorClass;
 	int classChoiceInput;
 	char isHardcoreInput;
-	int strength = 50, dexterity = 50, vitality = 50, energy = 50;
 
+
+	int strength = 50, dexterity = 50, vitality = 50, energy = 50;
 	int level = 1;
 	int maxHp = vitality * 2;
 	int hp = maxHp;
@@ -51,112 +52,125 @@ int main() {
 
 	bool isHardcore = true;
 
-	// '&' 주소연산자 실습
-	cout << "hp : " << hp << "\n";
-	cout << "hp adress : " << &hp << "\n"; // 변수의 주소값 출력
-	system("pause");	// 확인을 위해 잠시 퍼즈 
-
-	//'*'연산자 실습
-	int* ptr = &hp;
-	cout << "ptr == &hp : " << ptr << "\n";
-	cout << "*ptr : " << *ptr << "\n";
-
-	*ptr = 200; // 포인터 역참조하여 쓰기 및 수정
-	cout << "hp: " << hp << "\n";
-	system("pause");
+	//인벤토리(0 = 빈칸, 1 = Gold, 2 = Healing Potion, 3 = Weapon, 4 = Armor 실습
 	
-	//포인터 초기화 안햇을때 쓰레기값 실습 
-	//int* trashPtr;  <- 초기화가 되지않았음.
-	//int* trashPtr = nullptr; <- 이런식으로 초기화시켜줘야함.
-	//cout << trashPtr << "\n";
+	int gameInventory[5] = { 0, 0, 0, 0, 0 };
+
+
+
+
+
+	/**
+	* 보통 함수위에 쓰는 문서화를 위한 주석, 도큐먼트 주석이라고 함. - 일단 참고만 해두기
+	*/
+
 	
-	//데이터형과 포인터 크기 확인하기
-	cout << "sizeof(int) : " << sizeof(int) << "\n";
-	cout << "sizeof(int*) : " << sizeof(int*) << "\n";
-	cout << "sizeof(char) : " << sizeof(char) << "\n";
-	cout << "sizeof(char*) : " << sizeof(char*) << "\n";
-	cout << "sizeof(double) : " << sizeof(double) << "\n";
-	cout << "sizeof(double) : " << sizeof(double*) << "\n";
-	system("pause");
-
-
-	//포인터 연산 실습(ptr + 1 -> 자료형 크기만큼 이동하게됨)
-	cout << "ptr : " << ptr << "\n";
-	cout << "ptr+1 : " << ptr + 1 << "\n";
-	cout << "ptr+2 : " << ptr + 2 << "\n";
-	system("pause");
-
-	//배열구조 실습 - 주소값
-	int scores[5] = { 85, 92, 78, 95, 88 };
-	cout << "&scores[0] : " << &scores[0] << "\n";
-	cout << "&scores[1] : " << &scores[1] << "\n";
-	cout << "&scores[2] : " << &scores[2] << "\n";
-	cout << "&scores[3] : " << &scores[3] << "\n";
-	cout << "&scores[4] : " << &scores[4] << "\n";
-	system("pause");
-
-
-	//암시적 형변환(포인터붕괴)실습
-	cout << " scores : " << scores << "\n";
-	cout << " &scores : " << &scores << "\n";
-	cout << "&scores[0] : " << &scores[0] << "\n";
-	cout << " scores[2] : " << scores[2] << "\n";
-	cout << "*(scores+2) : " << *(scores + 2) << "\n";
-
-	//형변환의 예외적인 상황1 => scores가 포인터로 취급되기는 하지만 sizeof 함수를 사용하면 scores 배열 전체의 크기를 반환함. 
-	cout << "sizeof(scores) : " << sizeof(scores) << "\n";
-	cout << "sizeof(socres[0]) : " << sizeof(scores[0]) << "\n";
-	cout << "scores 원소 개수 : " << sizeof(scores) / sizeof(scores[0]) << "\n";
 	
-	//형변환의 예외적인 상황2 => & 연산자 사용
-	cout << " scores : " << scores << "\n";
-	cout << " scores+1 : " << scores + 1 << "\n";
-	cout << " &scores : " << &scores << "\n";
-	cout << " &scores + 1 : " << &scores + 1 << "\n"; // 배열 전체를 기준으로 이동함 (4바이트보다 더 크게 이동)
-	system("pause");
-	clearScreen();
+	//// '&' 주소연산자 실습
+	//cout << "hp : " << hp << "\n";
+	//cout << "hp adress : " << &hp << "\n"; // 변수의 주소값 출력
+	//system("pause");	// 확인을 위해 잠시 퍼즈 
 
-	// for문을 이용한 배열 순회
-	int* sPtr = scores;
-	for (int i = 0; i < 5; i++) {
-		cout << "주소 : " << sPtr << " 값 : " << *sPtr << "\n";
-		sPtr++;
-	}
-	system("pause");
-	clearScreen();
+	////'*'연산자 실습
+	//int* ptr = &hp;
+	//cout << "ptr == &hp : " << ptr << "\n";
+	//cout << "*ptr : " << *ptr << "\n";
+
+	//*ptr = 200; // 포인터 역참조하여 쓰기 및 수정
+	//cout << "hp: " << hp << "\n";
+	//system("pause");
+	//
+	////포인터 초기화 안햇을때 쓰레기값 실습 
+	////int* trashPtr;  <- 초기화가 되지않았음.
+	////int* trashPtr = nullptr; <- 이런식으로 초기화시켜줘야함.
+	////cout << trashPtr << "\n";
+	//
+	////데이터형과 포인터 크기 확인하기
+	//cout << "sizeof(int) : " << sizeof(int) << "\n";
+	//cout << "sizeof(int*) : " << sizeof(int*) << "\n";
+	//cout << "sizeof(char) : " << sizeof(char) << "\n";
+	//cout << "sizeof(char*) : " << sizeof(char*) << "\n";
+	//cout << "sizeof(double) : " << sizeof(double) << "\n";
+	//cout << "sizeof(double) : " << sizeof(double*) << "\n";
+	//system("pause");
 
 
-	// 야생포인터와 허상포인터
-	
-	//야생 포인터
-	//int* wildPtr;
-	//*wildPtr = 100;
-	 
-	//해결 방안 포인터를 선언과 동시에 초기화 해줌. 조건문과 세트라고 생각하기.
-	int* wildPtr = nullptr;	//안전한 초기화를 위한 nullptr 예약어를 사용해 초기화해줌.
-	if(wildPtr != nullptr){  //기본적으로 해당 조건문으로 분기하지는 않지만 항상 습관 들여놓기
-		*wildPtr = 100;
-	}
-	cout << "wildPtr : " << wildPtr << "\n";
+	////포인터 연산 실습(ptr + 1 -> 자료형 크기만큼 이동하게됨)
+	//cout << "ptr : " << ptr << "\n";
+	//cout << "ptr+1 : " << ptr + 1 << "\n";
+	//cout << "ptr+2 : " << ptr + 2 << "\n";
+	//system("pause");
 
-	//허상 포인터
-	int* danglePtr = new int(100); // 동적할당.
-	cout << "삭제 전 danglePtr : " << *danglePtr << "\n";
-	delete danglePtr; // 할당해준 메모리 해제
-	//*danglePtr = 200;
-	//cout << "삭제 후 danglePtr : " << *danglePtr << "\n"; //런타임 크래시 발생
+	////배열구조 실습 - 주소값
+	//int scores[5] = { 85, 92, 78, 95, 88 };
+	//cout << "&scores[0] : " << &scores[0] << "\n";
+	//cout << "&scores[1] : " << &scores[1] << "\n";
+	//cout << "&scores[2] : " << &scores[2] << "\n";
+	//cout << "&scores[3] : " << &scores[3] << "\n";
+	//cout << "&scores[4] : " << &scores[4] << "\n";
+	//system("pause");
 
-	//해결방안
-	danglePtr = nullptr;
-	cout << "삭제 후 danglePtr : " << danglePtr << "\n";
 
-	system("pause");
-	clearScreen();
+	////암시적 형변환(포인터붕괴)실습
+	//cout << " scores : " << scores << "\n";
+	//cout << " &scores : " << &scores << "\n";
+	//cout << "&scores[0] : " << &scores[0] << "\n";
+	//cout << " scores[2] : " << scores[2] << "\n";
+	//cout << "*(scores+2) : " << *(scores + 2) << "\n";
+
+	////형변환의 예외적인 상황1 => scores가 포인터로 취급되기는 하지만 sizeof 함수를 사용하면 scores 배열 전체의 크기를 반환함. 
+	//cout << "sizeof(scores) : " << sizeof(scores) << "\n";
+	//cout << "sizeof(socres[0]) : " << sizeof(scores[0]) << "\n";
+	//cout << "scores 원소 개수 : " << sizeof(scores) / sizeof(scores[0]) << "\n";
+	//
+	////형변환의 예외적인 상황2 => & 연산자 사용
+	//cout << " scores : " << scores << "\n";
+	//cout << " scores+1 : " << scores + 1 << "\n";
+	//cout << " &scores : " << &scores << "\n";
+	//cout << " &scores + 1 : " << &scores + 1 << "\n"; // 배열 전체를 기준으로 이동함 (4바이트보다 더 크게 이동)
+	//system("pause");
+	//clearScreen();
+
+	//// for문을 이용한 배열 순회
+	//int* sPtr = scores;
+	//for (int i = 0; i < 5; i++) {
+	//	cout << "주소 : " << sPtr << " 값 : " << *sPtr << "\n";
+	//	sPtr++;
+	//}
+	//system("pause");
+	//clearScreen();
+
+
+	//// 야생포인터와 허상포인터
+	//
+	////야생 포인터
+	////int* wildPtr;
+	////*wildPtr = 100;
+	// 
+	////해결 방안 포인터를 선언과 동시에 초기화 해줌. 조건문과 세트라고 생각하기.
+	//int* wildPtr = nullptr;	//안전한 초기화를 위한 nullptr 예약어를 사용해 초기화해줌.
+	//if(wildPtr != nullptr){  //기본적으로 해당 조건문으로 분기하지는 않지만 항상 습관 들여놓기
+	//	*wildPtr = 100;
+	//}
+	//cout << "wildPtr : " << wildPtr << "\n";
+
+	////허상 포인터
+	//int* danglePtr = new int(100); // 동적할당.
+	//cout << "삭제 전 danglePtr : " << *danglePtr << "\n";
+	//delete danglePtr; // 할당해준 메모리 해제
+	////*danglePtr = 200;
+	////cout << "삭제 후 danglePtr : " << *danglePtr << "\n"; //런타임 크래시 발생
+
+	////해결방안
+	//danglePtr = nullptr;
+	//cout << "삭제 후 danglePtr : " << danglePtr << "\n";
+
+	//system("pause");
+	//clearScreen();
 
 
 	//
-	system("pause");
-	clearScreen();
+	
 
 
 	// [SCENE 1: Character Creation]
@@ -302,15 +316,35 @@ int main() {
 		cout << "#               V I C T O R Y !                #\n";
 		cout << "################################################\n";
 		srand((unsigned int)time(NULL));
-		cout << "|                                              |\n";
 		cout << "| [LOOT FOUND]                                 |\n";
-		for (int i = 1; i <= 3; i++) {
-			string items[] = { "Gold Coin", "Red Potion", "Small Sword", "Old Shield" };
-			// 아이템 영문 표기로 통일하여 테두리 유지
-			cout << "|  " << i << ". " << left << setw(41) << items[rand() % 4] << "|\n";
+
+		int* inventoryPtr = gameInventory; // inventoryPtr이 gameInventory 배열의 시작주소를 가리킴.
+
+		// 반복문을 이용해서 인벤토리포인터를 이용해 인벤토리에 랜덤 숫자 3개 저장
+		for (int i = 1; i < 3; i++) {
+			*inventoryPtr = rand() % 4 + 1; // 역참조로 현재 칸에 아이템 코드를 저장함.
+			inventoryPtr++;
 		}
-		cout << "|                                              |\n";
+
+		//인벤토리 포인터로 인벤토리 출력(5칸)
+
+		inventoryPtr = gameInventory; // inventoryPtr을 초기화
+		int slot = 0;
+
+		while (inventoryPtr < gameInventory + 5) {
+			string itemName;
+			if (*inventoryPtr == 1) itemName = "Gold";
+			else if (*inventoryPtr == 2) itemName = "Healing Potion";
+			else if (*inventoryPtr == 3) itemName = "Weapon";
+			else if (*inventoryPtr == 4) itemName = "Armor";
+			else itemName = "Empty";
+			cout << "|>Slot " << slot << "|" << setw(38) << itemName << "| \n";
+
+			inventoryPtr++;
+			slot++;
+		}
 		cout << "################################################\n";
+		system("pause");
 	}
 
 	return 0;
