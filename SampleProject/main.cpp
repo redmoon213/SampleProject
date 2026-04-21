@@ -3,7 +3,7 @@
 #include<cstdlib>
 #include<ctime>
 #include<iomanip>
-
+#include <windows.h>
 using namespace std;
 
 // 화면을 지우는 함수
@@ -34,6 +34,7 @@ void drawGauge(string label, int current, int max) {
 }
 
 int main() {
+
 	char userName[50];
 	string charactorClass;
 	int classChoiceInput;
@@ -50,9 +51,20 @@ int main() {
 
 	bool isHardcore = true;
 
-	cout << "hp 변수의 값 : " << hp << "\n";
-	cout << "hp 변수의 주소값 : " << &hp << "\n"; // 변수의 주소값 출력
+	// '&' 주소연산자 실습
+	cout << "hp : " << hp << "\n";
+	cout << "hp adress : " << &hp << "\n"; // 변수의 주소값 출력
 	system("pause");	// 확인을 위해 잠시 퍼즈 
+
+	//'*'연산자 실습
+	int* ptr = &hp;
+	cout << "ptr == &hp : " << ptr << "\n";
+	cout << "*ptr : " << *ptr << "\n";
+
+	*ptr = 200; // 포인터 역참조하여 쓰기 및 수정
+	cout << "hp : " << hp << "\n";
+	system("pause");
+
 
 
 	// [SCENE 1: Character Creation]
