@@ -70,6 +70,15 @@ int main() {
 	//int* trashPtr = nullptr; <- 이런식으로 초기화시켜줘야함.
 	//cout << trashPtr << "\n";
 	
+	//데이터형과 포인터 크기 확인하기
+	cout << "sizeof(int) : " << sizeof(int) << "\n";
+	cout << "sizeof(int*) : " << sizeof(int*) << "\n";
+	cout << "sizeof(char) : " << sizeof(char) << "\n";
+	cout << "sizeof(char*) : " << sizeof(char*) << "\n";
+	cout << "sizeof(double) : " << sizeof(double) << "\n";
+	cout << "sizeof(double) : " << sizeof(double*) << "\n";
+	system("pause");
+
 
 	// [SCENE 1: Character Creation]
 	clearScreen();
