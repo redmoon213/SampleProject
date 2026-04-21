@@ -113,8 +113,18 @@ int main() {
 	cout << " scores+1 : " << scores + 1 << "\n";
 	cout << " &scores : " << &scores << "\n";
 	cout << " &scores + 1 : " << &scores + 1 << "\n"; // 배열 전체를 기준으로 이동함 (4바이트보다 더 크게 이동)
-	
 	system("pause");
+	clearScreen();
+
+	// for문을 이용한 배열 순회
+	int* sPtr = scores;
+	for (int i = 0; i < 5; i++) {
+		cout << "주소 : " << sPtr << " 값 : " << *sPtr << "\n";
+		sPtr++;
+	}
+
+	system("pause");
+
 
 	//
 	system("pause");
