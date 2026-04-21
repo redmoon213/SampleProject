@@ -96,6 +96,19 @@ int main() {
 	system("pause");
 
 
+	//암시적 형변환(포인터붕괴)실습
+	cout << " scores : " << scores << "\n";
+	cout << " &scores : " << &scores << "\n";
+	cout << "&scores[0] : " << &scores[0] << "\n";
+	cout << " scores[2] : " << scores[2] << "\n";
+	cout << "*(scores+2) : " << *(scores + 2) << "\n";
+	system("pause");
+
+
+	//
+	system("pause");
+
+
 	// [SCENE 1: Character Creation]
 	clearScreen();
 	cout << "################################################\n";
