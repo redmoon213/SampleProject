@@ -1,4 +1,4 @@
-#include<iostream>
+﻿#include<iostream>
 #include<string>
 #include<cstdlib>
 #include<ctime>
@@ -62,10 +62,14 @@ int main() {
 	cout << "*ptr : " << *ptr << "\n";
 
 	*ptr = 200; // 포인터 역참조하여 쓰기 및 수정
-	cout << "hp : " << hp << "\n";
+	cout << "hp: " << hp << "\n";
 	system("pause");
-
-
+	
+	//포인터 초기화 안햇을때 쓰레기값 실습
+	//int* trashPtr;  <- 초기화가 되지않았음.
+	//int* trashPtr = nullptr; <- 이런식으로 초기화시켜줘야함.
+	//cout << trashPtr << "\n";
+	
 
 	// [SCENE 1: Character Creation]
 	clearScreen();
