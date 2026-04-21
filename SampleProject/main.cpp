@@ -139,6 +139,17 @@ int main() {
 	}
 	cout << "wildPtr : " << wildPtr << "\n";
 
+	//허상 포인터
+	int* danglePtr = new int(100); // 동적할당.
+	cout << "삭제 전 danglePtr : " << *danglePtr << "\n";
+	delete danglePtr; // 할당해준 메모리 해제
+	//*danglePtr = 200;
+	//cout << "삭제 후 danglePtr : " << *danglePtr << "\n"; //런타임 크래시 발생
+
+	//해결방안
+	danglePtr = nullptr;
+	cout << "삭제 후 danglePtr : " << danglePtr << "\n";
+
 	system("pause");
 	clearScreen();
 
