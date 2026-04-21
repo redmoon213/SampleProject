@@ -102,8 +102,19 @@ int main() {
 	cout << "&scores[0] : " << &scores[0] << "\n";
 	cout << " scores[2] : " << scores[2] << "\n";
 	cout << "*(scores+2) : " << *(scores + 2) << "\n";
-	system("pause");
 
+	//형변환의 예외적인 상황1 => scores가 포인터로 취급되기는 하지만 sizeof 함수를 사용하면 scores 배열 전체의 크기를 반환함. 
+	cout << "sizeof(scores) : " << sizeof(scores) << "\n";
+	cout << "sizeof(socres[0]) : " << sizeof(scores[0]) << "\n";
+	cout << "scores 원소 개수 : " << sizeof(scores) / sizeof(scores[0]) << "\n";
+	
+	//형변환의 예외적인 상황2 => & 연산자 사용
+	cout << " scores : " << scores << "\n";
+	cout << " scores+1 : " << scores + 1 << "\n";
+	cout << " &scores : " << &scores << "\n";
+	cout << " &scores + 1 : " << &scores + 1 << "\n"; // 배열 전체를 기준으로 이동함 (4바이트보다 더 크게 이동)
+	
+	system("pause");
 
 	//
 	system("pause");
