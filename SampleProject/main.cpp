@@ -80,6 +80,12 @@ int main() {
 	system("pause");
 
 
+	//포인터 연산 실습(ptr + 1 -> 자료형 크기만큼 이동하게됨)
+	cout << "ptr : " << ptr << "\n";
+	cout << "ptr : " << ptr + 1 << "\n";
+	cout << "ptr : " << ptr + 2 << "\n";
+	system("pause");
+
 	// [SCENE 1: Character Creation]
 	clearScreen();
 	cout << "################################################\n";
