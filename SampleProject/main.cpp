@@ -65,7 +65,7 @@ int main() {
 	cout << "hp: " << hp << "\n";
 	system("pause");
 	
-	//포인터 초기화 안햇을때 쓰레기값 실습
+	//포인터 초기화 안햇을때 쓰레기값 실습 
 	//int* trashPtr;  <- 초기화가 되지않았음.
 	//int* trashPtr = nullptr; <- 이런식으로 초기화시켜줘야함.
 	//cout << trashPtr << "\n";
@@ -122,12 +122,30 @@ int main() {
 		cout << "주소 : " << sPtr << " 값 : " << *sPtr << "\n";
 		sPtr++;
 	}
+	system("pause");
+	clearScreen();
+
+
+	// 야생포인터와 허상포인터
+	
+	//야생 포인터
+	//int* wildPtr;
+	//*wildPtr = 100;
+	 
+	//해결 방안 포인터를 선언과 동시에 초기화 해줌. 조건문과 세트라고 생각하기.
+	int* wildPtr = nullptr;	//안전한 초기화를 위한 nullptr 예약어를 사용해 초기화해줌.
+	if(wildPtr != nullptr){  //기본적으로 해당 조건문으로 분기하지는 않지만 항상 습관 들여놓기
+		*wildPtr = 100;
+	}
+	cout << "wildPtr : " << wildPtr << "\n";
 
 	system("pause");
+	clearScreen();
 
 
 	//
 	system("pause");
+	clearScreen();
 
 
 	// [SCENE 1: Character Creation]
