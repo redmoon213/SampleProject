@@ -33,6 +33,36 @@ void drawGauge(string label, int current, int max) {
 	cout << "] " << right << setw(5) << current << "/" << left << setw(4) << max << " |\n";
 }
 
+
+//Call by value 실습을 위한 함수
+void PreviewCritical(float attackDamage) {
+	attackDamage *= 2; // 파라미터로 받아온 값을 변경하더라도 원본은 바뀌지 않을것이다.
+	cout << "<Call by Value> attack damage : " << attackDamage << "\n";
+}
+
+//Call by Reference를 활용한 크리티컬 데미지를 실제 적용시키는 함수
+void ApplyCriticalDamage(int& goblinHp, float attackDamage){
+	int critDamage = attackDamage * 2;
+	goblinHp -= critDamage;
+}
+
+////call by adress 실습을 위한 함수 작성
+//void LevelUp(int* level) {
+//	(*level)++;				//역참조를 통해 level 원본 데이터의 값을 1올려줌
+//	
+//}
+
+//call by reference 실습을 위한 함수 작성
+void LevelUpRef(int& level) {
+	level++;
+}
+
+//const 참조자 실습을 위한 함수 작성
+void PrintLevel(const int& level) {
+	cout << "<PrintLevel> Level : " << level << "\n";
+	//level++; //파라미터를 수정하려고 해도 불가능함 
+}
+
 int main() {
 
 	char userName[50];
@@ -57,7 +87,44 @@ int main() {
 	int gameInventory[5] = { 0, 0, 0, 0, 0 };
 
 
+	////Call by value 실습을 위한 함수 호출
+	//cout << "<원본> attack damage : " << attackDamage << "\n";
+	//PreviewCritical(attackDamage);
+	//cout << "<원본> attack damage : " << attackDamage << "\n";
+	//system("pause");
+	//clearScreen();
 
+	////call by adress 실습을 위한 함수 호출
+	//cout << "<원본> Level : " << level << "\n";
+	//LevelUp(&level);
+	//cout << "<Call by adress> Level : " << level << "\n";
+	//system("pause");
+	//clearScreen();
+
+	////call by reference 실습 별칭(Alias) 선언 -> 원본과 같은 메모리를 가리킴
+
+	//int& levelRef = level;
+	//cout << "ref++ 이전 level : " << level << "\n";
+	//levelRef++;
+	//cout << "ref++ 이후 level : " << level << "\n";
+	//cout << "ref 의 값 : " << levelRef << "\n";
+	//
+	//LevelUpRef(level); //함수 파라미터로 int& level이 선언되어있으나 참조자를 인수로 넘기는게 아닌 원본 변수를 넘겨도 알아서 참조자가 연결됨
+	//cout << "<Call by Reference> level : " << level << "\n";
+
+	//system("pause");
+	//clearScreen();
+
+	//// const 참조자 실습
+	//PrintLevel(level);
+
+	//system("pause");
+	//clearScreen();
+
+
+	//// 
+	//system("pause");
+	//clearScreen();
 
 
 	/**
@@ -164,13 +231,11 @@ int main() {
 	////해결방안
 	//danglePtr = nullptr;
 	//cout << "삭제 후 danglePtr : " << danglePtr << "\n";
-
-	//system("pause");
-	//clearScreen();
-
-
+	
 	//
 	
+	
+
 
 
 	// [SCENE 1: Character Creation]
@@ -239,7 +304,6 @@ int main() {
 
 
 	while (goblinHp > 0 && hp > 0) {
-		
 		clearScreen();
 		cout << "################################################\n";
 		cout << "#                BATTLE FIELD                  #\n";
@@ -253,7 +317,7 @@ int main() {
 		drawGauge("GOBLIN", goblinHp, maxGoblinHp);
 		cout << "|----------------------------------------------|\n";
 		cout << "|  1. Attack                                   |\n";
-		cout << "|                                              |\n";
+		cout << "|  2. Critical Attack!                         |\n";
 		cout << "################################################\n";
 		
 		if (action == 1) {
@@ -266,10 +330,21 @@ int main() {
 				cout << " >> Goblin counter-attacks! You take 30 damage.\n";
 			}
 		}
+		//고쳐야겠다 이거 
+		//입력으로 2를 받았을 때 크리티컬 데미지를 적용
+		else if (action == 2) {
 
-		else if(isFirstTurn!=true){
-
+			if (goblinHp < 0) goblinHp = 0;
 			
+			cout << "\n >>Critical Hit!!!>> You dealt " << attackDamage*2 << " damage to Goblin!\n";
+			
+			if (goblinHp > 0) {
+				cout << " >> Goblin counter-attacks! You take 30 damage.\n";
+			}
+		}
+		
+		//system("pause");
+		else if(isFirstTurn!=true){
 			cout << "\n >> You hesitated! Goblin attacks you! (-30 HP)\n";
 		}
 
@@ -279,6 +354,16 @@ int main() {
 		if (action == 1) {
 			goblinHp -= (int)attackDamage;
 			
+			if (goblinHp > 0) {
+				hp -= 30;
+				if (hp < 0) hp = 0;
+			}
+		}
+
+		else if (action == 2) {
+			PreviewCritical(attackDamage);
+			ApplyCriticalDamage(goblinHp, attackDamage);
+
 			if (goblinHp > 0) {
 				hp -= 30;
 				if (hp < 0) hp = 0;
@@ -296,7 +381,7 @@ int main() {
 
 			
 
-		}
+	}
 		
 
 		
@@ -321,13 +406,12 @@ int main() {
 		int* inventoryPtr = gameInventory; // inventoryPtr이 gameInventory 배열의 시작주소를 가리킴.
 
 		// 반복문을 이용해서 인벤토리포인터를 이용해 인벤토리에 랜덤 숫자 3개 저장
-		for (int i = 1; i < 3; i++) {
+		for (int i = 1; i <= 3; i++) {
 			*inventoryPtr = rand() % 4 + 1; // 역참조로 현재 칸에 아이템 코드를 저장함.
 			inventoryPtr++;
 		}
 
 		//인벤토리 포인터로 인벤토리 출력(5칸)
-
 		inventoryPtr = gameInventory; // inventoryPtr을 초기화
 		int slot = 0;
 
@@ -343,6 +427,9 @@ int main() {
 			inventoryPtr++;
 			slot++;
 		}
+		LevelUpRef(level);
+		PrintLevel(level);
+
 		cout << "################################################\n";
 		system("pause");
 	}
