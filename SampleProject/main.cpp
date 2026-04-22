@@ -40,11 +40,17 @@ void PreviewCritical(float attackDamage) {
 	cout << "<Call by Value> attack damage : " << attackDamage << "\n";
 }
 
-//call by adress 실습을 위한 함수 작성
-void LevelUp(int* level) {
-	(*level)++;				//역참조를 통해 level 원본 데이터의 값을 1올려줌
-	
+//Call by Reference를 활용한 크리티컬 데미지를 실제 적용시키는 함수
+void ApplyCriticalDamage(int& goblinHp, float attackDamage){
+	int critDamage = attackDamage * 2;
+	goblinHp -= critDamage;
 }
+
+////call by adress 실습을 위한 함수 작성
+//void LevelUp(int* level) {
+//	(*level)++;				//역참조를 통해 level 원본 데이터의 값을 1올려줌
+//	
+//}
 
 //call by reference 실습을 위한 함수 작성
 void LevelUpRef(int& level) {
@@ -81,44 +87,44 @@ int main() {
 	int gameInventory[5] = { 0, 0, 0, 0, 0 };
 
 
-	//Call by value 실습을 위한 함수 호출
-	cout << "<원본> attack damage : " << attackDamage << "\n";
-	PreviewCritical(attackDamage);
-	cout << "<원본> attack damage : " << attackDamage << "\n";
-	system("pause");
-	clearScreen();
+	////Call by value 실습을 위한 함수 호출
+	//cout << "<원본> attack damage : " << attackDamage << "\n";
+	//PreviewCritical(attackDamage);
+	//cout << "<원본> attack damage : " << attackDamage << "\n";
+	//system("pause");
+	//clearScreen();
 
-	//call by adress 실습을 위한 함수 호출
-	cout << "<원본> Level : " << level << "\n";
-	LevelUp(&level);
-	cout << "<Call by adress> Level : " << level << "\n";
-	system("pause");
-	clearScreen();
+	////call by adress 실습을 위한 함수 호출
+	//cout << "<원본> Level : " << level << "\n";
+	//LevelUp(&level);
+	//cout << "<Call by adress> Level : " << level << "\n";
+	//system("pause");
+	//clearScreen();
 
-	//call by reference 실습 별칭(Alias) 선언 -> 원본과 같은 메모리를 가리킴
+	////call by reference 실습 별칭(Alias) 선언 -> 원본과 같은 메모리를 가리킴
 
-	int& levelRef = level;
-	cout << "ref++ 이전 level : " << level << "\n";
-	levelRef++;
-	cout << "ref++ 이후 level : " << level << "\n";
-	cout << "ref 의 값 : " << levelRef << "\n";
-	
-	LevelUpRef(level); //함수 파라미터로 int& level이 선언되어있으나 참조자를 인수로 넘기는게 아닌 원본 변수를 넘겨도 알아서 참조자가 연결됨
-	cout << "<Call by Reference> level : " << level << "\n";
+	//int& levelRef = level;
+	//cout << "ref++ 이전 level : " << level << "\n";
+	//levelRef++;
+	//cout << "ref++ 이후 level : " << level << "\n";
+	//cout << "ref 의 값 : " << levelRef << "\n";
+	//
+	//LevelUpRef(level); //함수 파라미터로 int& level이 선언되어있으나 참조자를 인수로 넘기는게 아닌 원본 변수를 넘겨도 알아서 참조자가 연결됨
+	//cout << "<Call by Reference> level : " << level << "\n";
 
-	system("pause");
-	clearScreen();
+	//system("pause");
+	//clearScreen();
 
-	// const 참조자 실습
-	PrintLevel(level);
+	//// const 참조자 실습
+	//PrintLevel(level);
 
-	system("pause");
-	clearScreen();
+	//system("pause");
+	//clearScreen();
 
 
-	// 
-	system("pause");
-	clearScreen();
+	//// 
+	//system("pause");
+	//clearScreen();
 
 
 	/**
@@ -298,7 +304,6 @@ int main() {
 
 
 	while (goblinHp > 0 && hp > 0) {
-		
 		clearScreen();
 		cout << "################################################\n";
 		cout << "#                BATTLE FIELD                  #\n";
@@ -312,7 +317,7 @@ int main() {
 		drawGauge("GOBLIN", goblinHp, maxGoblinHp);
 		cout << "|----------------------------------------------|\n";
 		cout << "|  1. Attack                                   |\n";
-		cout << "|                                              |\n";
+		cout << "|  2. Critical Attack!                         |\n";
 		cout << "################################################\n";
 		
 		if (action == 1) {
@@ -325,10 +330,21 @@ int main() {
 				cout << " >> Goblin counter-attacks! You take 30 damage.\n";
 			}
 		}
+		//고쳐야겠다 이거 
+		//입력으로 2를 받았을 때 크리티컬 데미지를 적용
+		else if (action == 2) {
 
-		else if(isFirstTurn!=true){
-
+			if (goblinHp < 0) goblinHp = 0;
 			
+			cout << "\n >>Critical Hit!!!>> You dealt " << attackDamage*2 << " damage to Goblin!\n";
+			
+			if (goblinHp > 0) {
+				cout << " >> Goblin counter-attacks! You take 30 damage.\n";
+			}
+		}
+		
+		//system("pause");
+		else if(isFirstTurn!=true){
 			cout << "\n >> You hesitated! Goblin attacks you! (-30 HP)\n";
 		}
 
@@ -338,6 +354,16 @@ int main() {
 		if (action == 1) {
 			goblinHp -= (int)attackDamage;
 			
+			if (goblinHp > 0) {
+				hp -= 30;
+				if (hp < 0) hp = 0;
+			}
+		}
+
+		else if (action == 2) {
+			PreviewCritical(attackDamage);
+			ApplyCriticalDamage(goblinHp, attackDamage);
+
 			if (goblinHp > 0) {
 				hp -= 30;
 				if (hp < 0) hp = 0;
@@ -355,7 +381,7 @@ int main() {
 
 			
 
-		}
+	}
 		
 
 		
@@ -401,6 +427,9 @@ int main() {
 			inventoryPtr++;
 			slot++;
 		}
+		LevelUpRef(level);
+		PrintLevel(level);
+
 		cout << "################################################\n";
 		system("pause");
 	}
