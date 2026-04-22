@@ -46,6 +46,10 @@ void LevelUp(int* level) {
 	
 }
 
+//call by reference 실습을 위한 함수 작성
+void LevelUpRef(int& level) {
+	level++;
+}
 
 
 int main() {
@@ -86,13 +90,17 @@ int main() {
 	system("pause");
 	clearScreen();
 
-	//call by reference 실습 별칭(Alias) 선언 -> 원본과 같은 메모리
+	//call by reference 실습 별칭(Alias) 선언 -> 원본과 같은 메모리를 가리킴
 
 	int& levelRef = level;
 	cout << "ref++ 이전 level : " << level << "\n";
 	levelRef++;
 	cout << "ref++ 이후 level : " << level << "\n";
 	cout << "ref 의 값 : " << levelRef << "\n";
+	
+	LevelUpRef(level); //함수 파라미터로 int& level이 선언되어있으나 참조자를 인수로 넘기는게 아닌 원본 변수를 넘겨도 알아서 참조자가 연결됨
+	cout << "<Call by Reference> level : " << level << "\n";
+
 
 	system("pause");
 	clearScreen();
