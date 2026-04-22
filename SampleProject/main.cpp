@@ -1,0 +1,438 @@
+﻿#include<iostream>
+#include<string>
+#include<cstdlib>
+#include<ctime>
+#include<iomanip>
+#include <windows.h>
+using namespace std;
+
+// 화면을 지우는 함수
+void clearScreen() {
+#ifdef _WIN32
+	system("cls");
+#else
+	system("clear");
+#endif
+}
+
+// 체력 게이지 출력 함수 (ASCII 버전)
+// 한글 폭 문제를 피하기 위해 라벨과 게이지를 정교하게 계산
+void drawGauge(string label, int current, int max) {
+	int width = 20;
+	float ratio = (float)current / max;
+	if (ratio < 0) ratio = 0;
+	int filled = (int)(width * ratio);
+
+	// 라벨 영문 10칸 고정
+	cout << "| " << left << setw(10) << label << " [";
+	for (int i = 0; i < width; i++) {
+		if (i < filled) cout << "#";
+		else cout << " ";
+	}
+	// 수치 부분 7칸 + 테두리 마무리
+	cout << "] " << right << setw(5) << current << "/" << left << setw(4) << max << " |\n";
+}
+
+
+//Call by value 실습을 위한 함수
+void PreviewCritical(float attackDamage) {
+	attackDamage *= 2; // 파라미터로 받아온 값을 변경하더라도 원본은 바뀌지 않을것이다.
+	cout << "<Call by Value> attack damage : " << attackDamage << "\n";
+}
+
+//Call by Reference를 활용한 크리티컬 데미지를 실제 적용시키는 함수
+void ApplyCriticalDamage(int& goblinHp, float attackDamage){
+	int critDamage = attackDamage * 2;
+	goblinHp -= critDamage;
+}
+
+////call by adress 실습을 위한 함수 작성
+//void LevelUp(int* level) {
+//	(*level)++;				//역참조를 통해 level 원본 데이터의 값을 1올려줌
+//	
+//}
+
+//call by reference 실습을 위한 함수 작성
+void LevelUpRef(int& level) {
+	level++;
+}
+
+//const 참조자 실습을 위한 함수 작성
+void PrintLevel(const int& level) {
+	cout << "<PrintLevel> Level : " << level << "\n";
+	//level++; //파라미터를 수정하려고 해도 불가능함 
+}
+
+int main() {
+
+	char userName[50];
+	string charactorClass;
+	int classChoiceInput;
+	char isHardcoreInput;
+
+
+	int strength = 50, dexterity = 50, vitality = 50, energy = 50;
+	int level = 1;
+	int maxHp = vitality * 2;
+	int hp = maxHp;
+	int mp = energy * 1.5;
+	float attackDamage = strength * 0.2;
+	float attackSpeed = dexterity / 10.0;
+	double movingSpeed = dexterity / 30.0;
+
+	bool isHardcore = true;
+
+	//인벤토리(0 = 빈칸, 1 = Gold, 2 = Healing Potion, 3 = Weapon, 4 = Armor 실습
+	
+	int gameInventory[5] = { 0, 0, 0, 0, 0 };
+
+
+	////Call by value 실습을 위한 함수 호출
+	//cout << "<원본> attack damage : " << attackDamage << "\n";
+	//PreviewCritical(attackDamage);
+	//cout << "<원본> attack damage : " << attackDamage << "\n";
+	//system("pause");
+	//clearScreen();
+
+	////call by adress 실습을 위한 함수 호출
+	//cout << "<원본> Level : " << level << "\n";
+	//LevelUp(&level);
+	//cout << "<Call by adress> Level : " << level << "\n";
+	//system("pause");
+	//clearScreen();
+
+	////call by reference 실습 별칭(Alias) 선언 -> 원본과 같은 메모리를 가리킴
+
+	//int& levelRef = level;
+	//cout << "ref++ 이전 level : " << level << "\n";
+	//levelRef++;
+	//cout << "ref++ 이후 level : " << level << "\n";
+	//cout << "ref 의 값 : " << levelRef << "\n";
+	//
+	//LevelUpRef(level); //함수 파라미터로 int& level이 선언되어있으나 참조자를 인수로 넘기는게 아닌 원본 변수를 넘겨도 알아서 참조자가 연결됨
+	//cout << "<Call by Reference> level : " << level << "\n";
+
+	//system("pause");
+	//clearScreen();
+
+	//// const 참조자 실습
+	//PrintLevel(level);
+
+	//system("pause");
+	//clearScreen();
+
+
+	//// 
+	//system("pause");
+	//clearScreen();
+
+
+	/**
+	* 보통 함수위에 쓰는 문서화를 위한 주석, 도큐먼트 주석이라고 함. - 일단 참고만 해두기
+	*/
+
+	
+	
+	//// '&' 주소연산자 실습
+	//cout << "hp : " << hp << "\n";
+	//cout << "hp adress : " << &hp << "\n"; // 변수의 주소값 출력
+	//system("pause");	// 확인을 위해 잠시 퍼즈 
+
+	////'*'연산자 실습
+	//int* ptr = &hp;
+	//cout << "ptr == &hp : " << ptr << "\n";
+	//cout << "*ptr : " << *ptr << "\n";
+
+	//*ptr = 200; // 포인터 역참조하여 쓰기 및 수정
+	//cout << "hp: " << hp << "\n";
+	//system("pause");
+	//
+	////포인터 초기화 안햇을때 쓰레기값 실습 
+	////int* trashPtr;  <- 초기화가 되지않았음.
+	////int* trashPtr = nullptr; <- 이런식으로 초기화시켜줘야함.
+	////cout << trashPtr << "\n";
+	//
+	////데이터형과 포인터 크기 확인하기
+	//cout << "sizeof(int) : " << sizeof(int) << "\n";
+	//cout << "sizeof(int*) : " << sizeof(int*) << "\n";
+	//cout << "sizeof(char) : " << sizeof(char) << "\n";
+	//cout << "sizeof(char*) : " << sizeof(char*) << "\n";
+	//cout << "sizeof(double) : " << sizeof(double) << "\n";
+	//cout << "sizeof(double) : " << sizeof(double*) << "\n";
+	//system("pause");
+
+
+	////포인터 연산 실습(ptr + 1 -> 자료형 크기만큼 이동하게됨)
+	//cout << "ptr : " << ptr << "\n";
+	//cout << "ptr+1 : " << ptr + 1 << "\n";
+	//cout << "ptr+2 : " << ptr + 2 << "\n";
+	//system("pause");
+
+	////배열구조 실습 - 주소값
+	//int scores[5] = { 85, 92, 78, 95, 88 };
+	//cout << "&scores[0] : " << &scores[0] << "\n";
+	//cout << "&scores[1] : " << &scores[1] << "\n";
+	//cout << "&scores[2] : " << &scores[2] << "\n";
+	//cout << "&scores[3] : " << &scores[3] << "\n";
+	//cout << "&scores[4] : " << &scores[4] << "\n";
+	//system("pause");
+
+
+	////암시적 형변환(포인터붕괴)실습
+	//cout << " scores : " << scores << "\n";
+	//cout << " &scores : " << &scores << "\n";
+	//cout << "&scores[0] : " << &scores[0] << "\n";
+	//cout << " scores[2] : " << scores[2] << "\n";
+	//cout << "*(scores+2) : " << *(scores + 2) << "\n";
+
+	////형변환의 예외적인 상황1 => scores가 포인터로 취급되기는 하지만 sizeof 함수를 사용하면 scores 배열 전체의 크기를 반환함. 
+	//cout << "sizeof(scores) : " << sizeof(scores) << "\n";
+	//cout << "sizeof(socres[0]) : " << sizeof(scores[0]) << "\n";
+	//cout << "scores 원소 개수 : " << sizeof(scores) / sizeof(scores[0]) << "\n";
+	//
+	////형변환의 예외적인 상황2 => & 연산자 사용
+	//cout << " scores : " << scores << "\n";
+	//cout << " scores+1 : " << scores + 1 << "\n";
+	//cout << " &scores : " << &scores << "\n";
+	//cout << " &scores + 1 : " << &scores + 1 << "\n"; // 배열 전체를 기준으로 이동함 (4바이트보다 더 크게 이동)
+	//system("pause");
+	//clearScreen();
+
+	//// for문을 이용한 배열 순회
+	//int* sPtr = scores;
+	//for (int i = 0; i < 5; i++) {
+	//	cout << "주소 : " << sPtr << " 값 : " << *sPtr << "\n";
+	//	sPtr++;
+	//}
+	//system("pause");
+	//clearScreen();
+
+
+	//// 야생포인터와 허상포인터
+	//
+	////야생 포인터
+	////int* wildPtr;
+	////*wildPtr = 100;
+	// 
+	////해결 방안 포인터를 선언과 동시에 초기화 해줌. 조건문과 세트라고 생각하기.
+	//int* wildPtr = nullptr;	//안전한 초기화를 위한 nullptr 예약어를 사용해 초기화해줌.
+	//if(wildPtr != nullptr){  //기본적으로 해당 조건문으로 분기하지는 않지만 항상 습관 들여놓기
+	//	*wildPtr = 100;
+	//}
+	//cout << "wildPtr : " << wildPtr << "\n";
+
+	////허상 포인터
+	//int* danglePtr = new int(100); // 동적할당.
+	//cout << "삭제 전 danglePtr : " << *danglePtr << "\n";
+	//delete danglePtr; // 할당해준 메모리 해제
+	////*danglePtr = 200;
+	////cout << "삭제 후 danglePtr : " << *danglePtr << "\n"; //런타임 크래시 발생
+
+	////해결방안
+	//danglePtr = nullptr;
+	//cout << "삭제 후 danglePtr : " << danglePtr << "\n";
+	
+	//
+	
+	
+
+
+
+	// [SCENE 1: Character Creation]
+	clearScreen();
+	cout << "################################################\n";
+	cout << "#                                              #\n";
+	cout << "#         DIABLO-STYLE RPG PROJECT v1.0        #\n";
+	cout << "#                                              #\n";
+	cout << "################################################\n\n";
+	cout << " [1] CHARACTER CREATION\n";
+	cout << " ----------------------------------------------\n";
+	cout << "  > Input your name : ";
+	cin >> userName;
+
+	cout << "\n [2] SELECT YOUR CLASS\n";
+	cout << "  1. Amazon     2. Assassin    3. Barbarian \n";
+	cout << "  4. Druid      5. Necro       6. Paladin   \n";
+	cout << "  7. Sorceress  8. Warlock\n";
+	cout << "  > Choice : ";
+	cin >> classChoiceInput;
+
+	switch (classChoiceInput) {
+	case 1: charactorClass = "Amazon"; break;
+	case 2: charactorClass = "Assassin"; break;
+	case 3: charactorClass = "Barbarian"; break;
+	case 4: charactorClass = "Druid"; break;
+	case 5: charactorClass = "Necromancer"; break;
+	case 6: charactorClass = "Paladin"; break;
+	case 7: charactorClass = "Sorceress"; break;
+	case 8: charactorClass = "Warlock"; break;
+	default: charactorClass = "Unknown"; break;
+	}
+
+	cout << "\n [3] GAME MODE\n";
+	cout << "  Enable Hardcore? (1) Yes / (2) No : ";
+	cin >> isHardcoreInput;
+	isHardcore = (isHardcoreInput == '1');
+
+	// [SCENE 2: Status Window]
+	clearScreen();
+	cout << "################################################\n";
+	cout << "#               CHARACTER STATUS               #\n";
+	cout << "################################################\n";
+	cout << "| NAME   : " << left << setw(36) << userName << "|\n";
+	cout << "| CLASS  : " << left << setw(36) << charactorClass << "|\n";
+	// 한글이 포함된 행은 수동으로 여백 조정 (한글은 영문 2칸 취급)
+	if (isHardcore)
+		cout << "| MODE   : HARDCORE (Permadeath)               |\n";
+	else
+		cout << "| MODE   : STANDARD                            |\n";
+	cout << "|----------------------------------------------|\n";
+	drawGauge("LIFE", hp, maxHp);
+	cout << "|----------------------------------------------|\n";
+	// 수치 행들 (setw 간격 재조정)
+	cout << "| STR : " << left << setw(7) << strength << " | DEX : " << left << setw(7) << dexterity << " | VIT : " << left << setw(6) << vitality << " |\n";
+	cout << "| ATK : " << left << setw(7) << attackDamage << " | SPD : " << left << setw(7) << attackSpeed << " | NRG : " << left << setw(6) << energy << " |\n";
+	cout << "################################################\n";
+	cout << "\n [Press Any Key to Start Adventure...]\n";
+	system("pause > nul");
+
+	// [SCENE 3: Battle]
+	int maxGoblinHp = 30;
+	int goblinHp = maxGoblinHp;
+	int action = 0;
+	bool isFirstTurn = true;
+
+
+	while (goblinHp > 0 && hp > 0) {
+		clearScreen();
+		cout << "################################################\n";
+		cout << "#                BATTLE FIELD                  #\n";
+		cout << "################################################\n";
+		cout << "|                                              |\n";
+		cout << "|      (o_o)  < \"Gimme your gold!\"             |\n";
+		cout << "|      /| |\\                                   |\n";
+		cout << "|       | |            [A Goblin Approaches]   |\n";
+		cout << "|----------------------------------------------|\n";
+		drawGauge("PLAYER", hp, maxHp);
+		drawGauge("GOBLIN", goblinHp, maxGoblinHp);
+		cout << "|----------------------------------------------|\n";
+		cout << "|  1. Attack                                   |\n";
+		cout << "|  2. Critical Attack!                         |\n";
+		cout << "################################################\n";
+		
+		if (action == 1) {
+			
+			if (goblinHp < 0) goblinHp = 0;
+			cout << "\n >> You dealt " << attackDamage << " damage to Goblin!\n";
+			if (goblinHp > 0) {
+				
+				
+				cout << " >> Goblin counter-attacks! You take 30 damage.\n";
+			}
+		}
+		//고쳐야겠다 이거 
+		//입력으로 2를 받았을 때 크리티컬 데미지를 적용
+		else if (action == 2) {
+
+			if (goblinHp < 0) goblinHp = 0;
+			
+			cout << "\n >>Critical Hit!!!>> You dealt " << attackDamage*2 << " damage to Goblin!\n";
+			
+			if (goblinHp > 0) {
+				cout << " >> Goblin counter-attacks! You take 30 damage.\n";
+			}
+		}
+		
+		//system("pause");
+		else if(isFirstTurn!=true){
+			cout << "\n >> You hesitated! Goblin attacks you! (-30 HP)\n";
+		}
+
+		cout << " > Action: ";
+		cin >> action;
+
+		if (action == 1) {
+			goblinHp -= (int)attackDamage;
+			
+			if (goblinHp > 0) {
+				hp -= 30;
+				if (hp < 0) hp = 0;
+			}
+		}
+
+		else if (action == 2) {
+			PreviewCritical(attackDamage);
+			ApplyCriticalDamage(goblinHp, attackDamage);
+
+			if (goblinHp > 0) {
+				hp -= 30;
+				if (hp < 0) hp = 0;
+			}
+		}
+		else {
+			hp -= 30;
+			if (hp < 0) hp = 0;
+		}
+
+		isFirstTurn = false;
+			
+		
+			
+
+			
+
+	}
+		
+
+		
+
+	
+
+	// [SCENE 4: Result]
+	clearScreen();
+	cout << "################################################\n";
+	if (hp <= 0) {
+		cout << "#                                              #\n";
+		cout << "#                Y O U  D I E D                #\n";
+		cout << "#                                              #\n";
+		cout << "################################################\n";
+	}
+	else {
+		cout << "#               V I C T O R Y !                #\n";
+		cout << "################################################\n";
+		srand((unsigned int)time(NULL));
+		cout << "| [LOOT FOUND]                                 |\n";
+
+		int* inventoryPtr = gameInventory; // inventoryPtr이 gameInventory 배열의 시작주소를 가리킴.
+
+		// 반복문을 이용해서 인벤토리포인터를 이용해 인벤토리에 랜덤 숫자 3개 저장
+		for (int i = 1; i <= 3; i++) {
+			*inventoryPtr = rand() % 4 + 1; // 역참조로 현재 칸에 아이템 코드를 저장함.
+			inventoryPtr++;
+		}
+
+		//인벤토리 포인터로 인벤토리 출력(5칸)
+		inventoryPtr = gameInventory; // inventoryPtr을 초기화
+		int slot = 0;
+
+		while (inventoryPtr < gameInventory + 5) {
+			string itemName;
+			if (*inventoryPtr == 1) itemName = "Gold";
+			else if (*inventoryPtr == 2) itemName = "Healing Potion";
+			else if (*inventoryPtr == 3) itemName = "Weapon";
+			else if (*inventoryPtr == 4) itemName = "Armor";
+			else itemName = "Empty";
+			cout << "|>Slot " << slot << "|" << setw(38) << itemName << "| \n";
+
+			inventoryPtr++;
+			slot++;
+		}
+		LevelUpRef(level);
+		PrintLevel(level);
+
+		cout << "################################################\n";
+		system("pause");
+	}
+
+	return 0;
+}
