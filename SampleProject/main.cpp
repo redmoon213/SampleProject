@@ -51,6 +51,11 @@ void LevelUpRef(int& level) {
 	level++;
 }
 
+//const 참조자 실습을 위한 함수 작성
+void PrintLevel(const int& level) {
+	cout << "<PrintLevel> Level : " << level << "\n";
+	//level++; //파라미터를 수정하려고 해도 불가능함 
+}
 
 int main() {
 
@@ -101,9 +106,15 @@ int main() {
 	LevelUpRef(level); //함수 파라미터로 int& level이 선언되어있으나 참조자를 인수로 넘기는게 아닌 원본 변수를 넘겨도 알아서 참조자가 연결됨
 	cout << "<Call by Reference> level : " << level << "\n";
 
+	system("pause");
+	clearScreen();
+
+	// const 참조자 실습
+	PrintLevel(level);
 
 	system("pause");
 	clearScreen();
+
 
 	// 
 	system("pause");
