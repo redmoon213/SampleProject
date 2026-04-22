@@ -42,7 +42,7 @@ void PreviewCritical(float attackDamage) {
 
 //call by adress 실습을 위한 함수 작성
 void LevelUp(int* level) {
-	//(*level)++;				//역참조를 통해 level 원본 데이터의 값을 1올려줌
+	(*level)++;				//역참조를 통해 level 원본 데이터의 값을 1올려줌
 	
 }
 
@@ -86,8 +86,18 @@ int main() {
 	system("pause");
 	clearScreen();
 
+	//call by reference 실습 별칭(Alias) 선언 -> 원본과 같은 메모리
 
-	//
+	int& levelRef = level;
+	cout << "ref++ 이전 level : " << level << "\n";
+	levelRef++;
+	cout << "ref++ 이후 level : " << level << "\n";
+	cout << "ref 의 값 : " << levelRef << "\n";
+
+	system("pause");
+	clearScreen();
+
+	// 
 	system("pause");
 	clearScreen();
 
