@@ -38,6 +38,11 @@ void drawGauge(string label, int current, int max) {
 void PreviewCritical(float attackDamage) {
 	attackDamage *= 2; // 파라미터로 받아온 값을 변경하더라도 원본은 바뀌지 않을것이다.
 	cout << "<Call by Value> attack damage : " << attackDamage << "\n";
+}
+
+//call by adress 실습을 위한 함수 작성
+void LevelUp(int* level) {
+	//(*level)++;				//역참조를 통해 level 원본 데이터의 값을 1올려줌
 	
 }
 
@@ -67,7 +72,24 @@ int main() {
 	int gameInventory[5] = { 0, 0, 0, 0, 0 };
 
 
+	//Call by value 실습을 위한 함수 호출
+	cout << "<원본> attack damage : " << attackDamage << "\n";
+	PreviewCritical(attackDamage);
+	cout << "<원본> attack damage : " << attackDamage << "\n";
+	system("pause");
+	clearScreen();
 
+	//call by adress 실습을 위한 함수 호출
+	cout << "<원본> Level : " << level << "\n";
+	LevelUp(&level);
+	cout << "<Call by adress> Level : " << level << "\n";
+	system("pause");
+	clearScreen();
+
+
+	//
+	system("pause");
+	clearScreen();
 
 
 	/**
@@ -177,17 +199,7 @@ int main() {
 	
 	//
 	
-	//Call by value 실습을 위한 함수 호출
-	cout << "<원본> attack damage : " << attackDamage << "\n";  
-	PreviewCritical(attackDamage);
-	cout << "<원본> attack damage : " << attackDamage << "\n";
-	system("pause");
-	clearScreen();
-
-
-	//
-	system("pause");
-	clearScreen();
+	
 
 
 
