@@ -33,6 +33,16 @@ void drawGauge(string label, int current, int max) {
 	cout << "] " << right << setw(5) << current << "/" << left << setw(4) << max << " |\n";
 }
 
+
+//Call by value 실습을 위한 함수
+void PreviewCritical(float attackDamage) {
+	attackDamage *= 2; // 파라미터로 받아온 값을 변경하더라도 원본은 바뀌지 않을것이다.
+	cout << "<Call by Value> attack damage : " << attackDamage << "\n";
+	
+}
+
+
+
 int main() {
 
 	char userName[50];
@@ -164,13 +174,21 @@ int main() {
 	////해결방안
 	//danglePtr = nullptr;
 	//cout << "삭제 후 danglePtr : " << danglePtr << "\n";
-
-	//system("pause");
-	//clearScreen();
+	
+	//
+	
+	//Call by value 실습을 위한 함수 호출
+	cout << "<원본> attack damage : " << attackDamage << "\n";  
+	PreviewCritical(attackDamage);
+	cout << "<원본> attack damage : " << attackDamage << "\n";
+	system("pause");
+	clearScreen();
 
 
 	//
-	
+	system("pause");
+	clearScreen();
+
 
 
 	// [SCENE 1: Character Creation]
@@ -321,13 +339,12 @@ int main() {
 		int* inventoryPtr = gameInventory; // inventoryPtr이 gameInventory 배열의 시작주소를 가리킴.
 
 		// 반복문을 이용해서 인벤토리포인터를 이용해 인벤토리에 랜덤 숫자 3개 저장
-		for (int i = 1; i < 3; i++) {
+		for (int i = 1; i <= 3; i++) {
 			*inventoryPtr = rand() % 4 + 1; // 역참조로 현재 칸에 아이템 코드를 저장함.
 			inventoryPtr++;
 		}
 
 		//인벤토리 포인터로 인벤토리 출력(5칸)
-
 		inventoryPtr = gameInventory; // inventoryPtr을 초기화
 		int slot = 0;
 
