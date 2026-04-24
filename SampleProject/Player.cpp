@@ -12,8 +12,7 @@ exp(0), expToNextLevel(100)
     }
 
 
-int Player::CriticalAttack() const
-{return (int)attackDamage*2;}
+int Player::CriticalAttack() const {return (int)attackDamage*2;}
 
 void Player::LevelUp()
 {

@@ -5,6 +5,7 @@
 #include<iomanip>
 #include <windows.h>
 
+#include "Battle.h"
 #include"Monster.h"
 #include"Player.h"
 
@@ -119,14 +120,14 @@ int main() {
 	system("pause > nul");
 
 	// [SCENE 3: Battle]
-	int maxGoblinHp = 30;
-	int goblinHp = maxGoblinHp;
-	int action = 0;
 	bool isFirstTurn = true;
 	
-	//생성자 호출. 
 	Monster goblin1(50,0, 15, 0, 150);
-
+	Battle battle1(player, goblin1);
+	battle1.Run();
+	
+	//생성자 호출. 
+/*
 	while (goblin1.isAlive() && player.isAlive()) {
 		clearScreen();
 		cout << "################################################\n";
@@ -143,60 +144,9 @@ int main() {
 		cout << "|  1. Attack                                   |\n";
 		cout << "|  2. Critical Attack!                         |\n";
 		cout << "################################################\n";
-		
-		if (action == 1) {
-			
-			//if (goblinHp < 0) goblinHp = 0;
-			cout << "\n >> You dealt " << player.get_attack_damage() << " damage to Goblin!\n";
-			if (goblin1.isAlive()) {
-				
-				
-				cout << " >> Goblin counter-attacks! You take " << goblin1.Attack()<< " damage.\n";
-			}
-		}
-		//고쳐야겠다 이거 
-		//입력으로 2를 받았을 때 크리티컬 데미지를 적용
-		else if (action == 2) {
-
-			//if (goblinHp < 0) goblinHp = 0;
-			
-			cout << "\n >>Critical Hit!!!>> You dealt " << player.CriticalAttack()<< " damage to Goblin!\n";
-			
-			if (goblin1.isAlive()) {
-				cout << " >> Goblin counter-attacks! You take " << goblin1.Attack()<< " damage.\n";
-			}
-		}
-		
-		//system("pause");
-		else if(isFirstTurn!=true){
-			cout << "\n >> You hesitated! Goblin attacks you! (-" << goblin1.Attack()<<" HP)\n";
-		}
-
-		cout << " > Action: ";
-		cin >> action;
-
-		if (action == 1) {
-			//goblinHp -= (int)attackDamage;
-			goblin1.TakeDamage(player.get_attack_damage());
-			if (goblin1.isAlive()) {
-				player.TakeDamage(goblin1.Attack());
-			}
-		}
-
-		else if (action == 2) {
-			goblin1.TakeDamage(player.CriticalAttack());
-			if (goblin1.isAlive()) {
-				player.TakeDamage(goblin1.Attack());
-			}
-		}
-		else
-		{
-			player.TakeDamage(goblin1.Attack());
-		}
-		isFirstTurn = false;
 	}
+	*/
 	
-
 	// [SCENE 4: Result]
 	clearScreen();
 	cout << "################################################\n";

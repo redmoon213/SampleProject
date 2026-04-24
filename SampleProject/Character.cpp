@@ -24,12 +24,6 @@ void Character::TakeDamage(int damage)
     if(hp<0) hp=0;
 }
 
-int Character::Attack() const
-{
-    return (int)attackDamage;
-}
+int Character::Attack() const{return (int)attackDamage;}
 
-bool Character::isAlive() const
-{
-    return hp>0;
-}
+bool Character::isAlive() const{return hp>0;}
