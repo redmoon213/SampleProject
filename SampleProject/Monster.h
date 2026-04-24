@@ -1,20 +1,14 @@
 ﻿#pragma once
-using namespace std;
+#include "Character.h"
 
-class Monster
+class Monster : public Character
 {
 private:
-    int hp, maxhp;
-    int attackDamage;
+    int expReward;
 	
 public:
-    Monster(int initHp, int initAtk);
+    Monster(int str, int dex, int vit, int eng, int expReward, int lv=1);
     ~Monster();
     
-    int GetHp() const {return hp;}
-    int GetMaxHp() const {return maxhp;}
-    bool isAlive() const {return hp > 0;}
-    void TakeDamage(int damage);	// 몬스터가 피해를 받음
-    
-    int Attack() const {return attackDamage;} // 몬스터가 플레이어를 공격
+    int GetExpReward() const {return expReward;}
 };

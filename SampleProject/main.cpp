@@ -6,7 +6,7 @@
 #include <windows.h>
 
 #include"Monster.h"
-#include"Plyaer.h"
+#include"Player.h"
 
 
 using namespace std;
@@ -125,7 +125,7 @@ int main() {
 	bool isFirstTurn = true;
 	
 	//생성자 호출. 
-	Monster goblin1(50,10);
+	Monster goblin1(50,0, 15, 0, 150);
 
 	while (goblin1.isAlive() && player.isAlive()) {
 		clearScreen();
@@ -138,7 +138,7 @@ int main() {
 		cout << "|       | |            [A Goblin Approaches]   |\n";
 		cout << "|----------------------------------------------|\n";
 		drawGauge("PLAYER", player.get_hp(), player.get_max_hp());
-		drawGauge("GOBLIN", goblin1.GetHp(), goblin1.GetMaxHp());
+		drawGauge("GOBLIN", goblin1.get_hp(), goblin1.get_max_hp());
 		cout << "|----------------------------------------------|\n";
 		cout << "|  1. Attack                                   |\n";
 		cout << "|  2. Critical Attack!                         |\n";
@@ -236,10 +236,11 @@ int main() {
 			inventoryPtr++;
 			slot++;
 		}
-		player.LevelUp();
-		player.PrintLevel();
-
 		cout << "################################################\n";
+		
+		player.GainExp(goblin1.GetExpReward());
+
+	
 		system("pause");
 	}
 	
