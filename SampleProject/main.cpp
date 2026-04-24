@@ -4,6 +4,11 @@
 #include<ctime>
 #include<iomanip>
 #include <windows.h>
+
+#include"Monster.h"
+#include"Plyaer.h"
+
+
 using namespace std;
 
 // 화면을 지우는 함수
@@ -34,222 +39,14 @@ void drawGauge(string label, int current, int max) {
 }
 
 
-//Call by value 실습을 위한 함수
-void PreviewCritical(float attackDamage) {
-	attackDamage *= 2; // 파라미터로 받아온 값을 변경하더라도 원본은 바뀌지 않을것이다.
-	cout << "<Call by Value> attack damage : " << attackDamage << "\n";
-}
-
-//Call by Reference를 활용한 크리티컬 데미지를 실제 적용시키는 함수
-void ApplyCriticalDamage(int& goblinHp, float attackDamage){
-	int critDamage = attackDamage * 2;
-	goblinHp -= critDamage;
-}
-
 ////call by adress 실습을 위한 함수 작성
 //void LevelUp(int* level) {
 //	(*level)++;				//역참조를 통해 level 원본 데이터의 값을 1올려줌
 //	
 //}
 
-//call by reference 실습을 위한 함수 작성
-void LevelUpRef(int& level) {
-	level++;
-}
-
-//const 참조자 실습을 위한 함수 작성
-void PrintLevel(const int& level) {
-	cout << "<PrintLevel> Level : " << level << "\n";
-	//level++; //파라미터를 수정하려고 해도 불가능함 
-}
-
 //class 실습. 몬스터 class 작성
-class Monster
-{
-private:
-	int hp, maxhp;
-	int attackDamage;
-	
-public:
-	Monster(int initHp, int initAtk): hp(initHp), maxhp(initHp), attackDamage(initAtk)
-	{
-		cout << "<몬스터 생성>\nHP : " << hp << "/ Attack Damage : " << attackDamage << "\n";
-	}
-	~Monster()
-	{
-		cout << "<몬스터 소멸>\n";
-	}
-	int GetHp() const {return hp;}
-	int GetMaxHp() const {return maxhp;}
-	bool isAlive() const {return hp > 0;}
-	void TakeDamage(int damage)	// 몬스터가 피해를 받음
-	{
-		hp -= damage;
-		if (hp<0) hp = 0; // hp 음수 방지
-	}
-	int Attack() const {return attackDamage;} // 몬스터가 플레이어를 공격
-};
 
-class Player
-{
-private:
-	string name;
-	string characterClass;
-	bool isHardcore;
-	
-	//기본 능력치
-	int strength, dexterity, vitality, energy;
-	
-	int level;
-	int hp, maxHp;
-	int mp, maxMp;
-	float attackDamage;
-	float attackSpeed;
-	double movingSpeed;
-	
-	//저항능력치
-	int fireResist, coldResist, lightningResist, poisonResist;
-	
-	//인벤토리
-	int inventory[5];
-	
-public:
-	Player(const string& name, const string& characterClass, bool isHardcore)
-	: name(name), characterClass(characterClass), isHardcore(isHardcore), // 매개변수로 받는애들 초기화
-	strength(50), dexterity(50), vitality(50), energy(50),
-	level(1),
-	fireResist(0), coldResist(0), lightningResist(0), poisonResist(0) //단순 값 세팅 하는애들 초기화
-	//계산이 필요한건 중괄호 안에
-	{
-		maxHp = vitality * 3;
-		hp = maxHp;
-		maxMp = energy * 2;
-		mp = maxMp;
-		
-		attackDamage = (float)strength * 0.2;
-		attackSpeed = (float)dexterity * 0.1;
-		movingSpeed = (float)dexterity / 30.0;
-		
-		for (int i =0; i<5; i++) inventory[i] = 0;
-	}
-	
-	//Getter
-	string get_name() const{return name;}
-
-	string get_character_class() const
-	{
-		return characterClass;
-	}
-
-	bool is_is_hardcore() const
-	{
-		return isHardcore;
-	}
-
-	int get_strength() const
-	{
-		return strength;
-	}
-
-	int get_dexterity() const
-	{
-		return dexterity;
-	}
-
-	int get_vitality() const
-	{
-		return vitality;
-	}
-
-	int get_energy() const
-	{
-		return energy;
-	}
-
-	int get_level() const
-	{
-		return level;
-	}
-
-	int get_hp() const
-	{
-		return hp;
-	}
-
-	int get_max_hp() const
-	{
-		return maxHp;
-	}
-
-	int get_mp() const
-	{
-		return mp;
-	}
-
-	int get_max_mp() const
-	{
-		return maxMp;
-	}
-
-	float get_attack_damage() const
-	{
-		return attackDamage;
-	}
-
-	float get_attack_speed() const
-	{
-		return attackSpeed;
-	}
-
-	double get_moving_speed() const
-	{
-		return movingSpeed;
-	}
-
-	int get_fire_resist() const
-	{
-		return fireResist;
-	}
-
-	int get_cold_resist() const
-	{
-		return coldResist;
-	}
-
-	int get_lightning_resist() const
-	{
-		return lightningResist;
-	}
-
-	int get_poison_resist() const
-	{
-		return poisonResist;
-	}
-	
-	int* GetInventory()	{return inventory;}
-	
-	//함수부분
-	bool isAlive() const{return hp>0;}
-	void TakeDamage(int damage)
-	{
-		hp-=damage;
-		if(hp<0) hp=0;
-	}
-	int Attack() const {return (int)attackDamage;}
-	int CriticalAttack() const {return (int)attackDamage*2;}
-	void LevelUp() {level++;}
-	
-	void PreviewCritical()
-	{
-		float preview = attackDamage * 2;
-		cout << "크리티컬 예상 데미지 : " << preview << "\n";
-	}
-	
-	void PrintLevel()
-	{
-		cout << "현재 레벨 : " << level << "\n";
-	}
-};
 
 int main() {
 
@@ -258,21 +55,6 @@ int main() {
 	int classChoiceInput;
 	char isHardcoreInput;
 	bool isHardcore = true;
-/*
-	int strength = 50, dexterity = 50, vitality = 50, energy = 50;
-	int level = 1;
-	int maxHp = vitality * 2;
-	int hp = maxHp;
-	int mp = energy * 1.5;
-	float attackDamage = strength * 0.2;
-	float attackSpeed = dexterity / 10.0;
-	double movingSpeed = dexterity / 30.0;
-*/
-	//bool isHardcore = true;
-
-	//인벤토리(0 = 빈칸, 1 = Gold, 2 = Healing Potion, 3 = Weapon, 4 = Armor 실습
-	
-	//int gameInventory[5] = { 0, 0, 0, 0, 0 };
 
 	// [SCENE 1: Character Creation]
 	clearScreen();
@@ -369,7 +151,7 @@ int main() {
 			if (goblin1.isAlive()) {
 				
 				
-				cout << " >> Goblin counter-attacks! You take " << goblin1.Attack()<< "damage.\n";
+				cout << " >> Goblin counter-attacks! You take " << goblin1.Attack()<< " damage.\n";
 			}
 		}
 		//고쳐야겠다 이거 
@@ -381,7 +163,7 @@ int main() {
 			cout << "\n >>Critical Hit!!!>> You dealt " << player.CriticalAttack()<< " damage to Goblin!\n";
 			
 			if (goblin1.isAlive()) {
-				cout << " >> Goblin counter-attacks! You take " << goblin1.Attack()<< "damage.\n";
+				cout << " >> Goblin counter-attacks! You take " << goblin1.Attack()<< " damage.\n";
 			}
 		}
 		
