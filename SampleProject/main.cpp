@@ -120,81 +120,14 @@ int main() {
 	system("pause > nul");
 
 	// [SCENE 3: Battle]
-	bool isFirstTurn = true;
-	
 	Monster goblin1(50,0, 15, 0, 150);
+	//vector<Monster>monsters();
 	Battle battle1(player, goblin1);
+	
 	battle1.Run();
-	
-	//생성자 호출. 
-/*
-	while (goblin1.isAlive() && player.isAlive()) {
-		clearScreen();
-		cout << "################################################\n";
-		cout << "#                BATTLE FIELD                  #\n";
-		cout << "################################################\n";
-		cout << "|                                              |\n";
-		cout << "|      (o_o)  < \"Gimme your gold!\"             |\n";
-		cout << "|      /| |\\                                   |\n";
-		cout << "|       | |            [A Goblin Approaches]   |\n";
-		cout << "|----------------------------------------------|\n";
-		drawGauge("PLAYER", player.get_hp(), player.get_max_hp());
-		drawGauge("GOBLIN", goblin1.get_hp(), goblin1.get_max_hp());
-		cout << "|----------------------------------------------|\n";
-		cout << "|  1. Attack                                   |\n";
-		cout << "|  2. Critical Attack!                         |\n";
-		cout << "################################################\n";
-	}
-	*/
-	
-	// [SCENE 4: Result]
-	clearScreen();
-	cout << "################################################\n";
-	if (!player.isAlive()) {
-		cout << "#                                              #\n";
-		cout << "#                Y O U  D I E D                #\n";
-		cout << "#                                              #\n";
-		cout << "################################################\n";
-	}
-	else {
-		cout << "#               V I C T O R Y !                #\n";
-		cout << "################################################\n";
-		srand((unsigned int)time(NULL));
-		cout << "| [LOOT FOUND]                                 |\n";
+	battle1.DisplayResult();
 
-		int* inventoryPtr = player.GetInventory(); // inventoryPtr이 gameInventory 배열의 시작주소를 가리킴.
-
-		// 반복문을 이용해서 인벤토리포인터를 이용해 인벤토리에 랜덤 숫자 3개 저장
-		for (int i = 1; i <= 3; i++) {
-			*inventoryPtr = rand() % 4 + 1; // 역참조로 현재 칸에 아이템 코드를 저장함.
-			inventoryPtr++;
-		}
-
-		//인벤토리 포인터로 인벤토리 출력(5칸)
-		inventoryPtr = player.GetInventory(); // inventoryPtr을 초기화
-		int slot = 0;
-
-		while (inventoryPtr < player.GetInventory() + 5) {
-			string itemName;
-			if (*inventoryPtr == 1) itemName = "Gold";
-			else if (*inventoryPtr == 2) itemName = "Healing Potion";
-			else if (*inventoryPtr == 3) itemName = "Weapon";
-			else if (*inventoryPtr == 4) itemName = "Armor";
-			else itemName = "Empty";
-			cout << "|>Slot " << slot << "|" << setw(38) << itemName << "| \n";
-
-			inventoryPtr++;
-			slot++;
-		}
-		cout << "################################################\n";
-		
-		player.GainExp(goblin1.GetExpReward());
-
-	
-		system("pause");
-	}
-	
-	
+	system("pause");
 	
 	return 0;
 }

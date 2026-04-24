@@ -13,4 +13,5 @@ public:
     bool Run();
     void DisplayScreen();
     void DrawGauge(std::string label, int current, int max);
+    void DisplayResult();
 };

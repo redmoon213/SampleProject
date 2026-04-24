@@ -104,3 +104,30 @@ void Battle::DrawGauge(std::string label, int current, int max)
     // 수치 부분 7칸 + 테두리 마무리
     std::cout << "] " << std::right << std::setw(5) << current << "/" << std::left << std::setw(4) << max << " |\n";
 }
+
+void Battle::DisplayResult()
+{
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+    
+    // [SCENE 4: Result]
+   
+    std::cout << "################################################\n";
+    if (!player.isAlive()) {
+         std::cout << "#                                              #\n";
+         std::cout << "#                Y O U  D I E D                #\n";
+         std::cout << "#                                              #\n";
+         std::cout << "################################################\n";
+    }
+    else
+    {
+        std::cout << "#               V I C T O R Y !                #\n";
+        std::cout << "################################################\n";
+    }
+    
+    player.Loot();
+    player.GainExp(monster.GetExpReward());
+}

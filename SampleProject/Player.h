@@ -1,5 +1,6 @@
 ﻿#pragma once      //참조되는 과정에서 컴파일러가 중복해서 읽지 않도록 방지함
 #include<string>
+#include<vector>
 #include "Character.h"
 //Character 클래스를 상속받은 Player 클래스
 class Player : public Character
@@ -12,7 +13,7 @@ private:
 	
 	int exp, expToNextLevel;
 	//인벤토리
-	int inventory[5];
+	std::vector<int> inventory;
 public:
 	Player(const std::string& name, const std::string& characterClass, bool isHardcore);
 	//Getter
@@ -21,12 +22,13 @@ public:
 	bool is_is_hardcore() const{return isHardcore;}
 	int get_exp() const{return exp;}
 	int get_expTotalLevel() const{return expToNextLevel;}
-	int* GetInventory()	{return inventory;}
+	std::vector<int> GetInventory()	{return inventory;}
 	//함수부분
 	int CriticalAttack() const; 
 	void LevelUp();
 	void PreviewCritical() const;
 	void PrintLevel() const;
 	void GainExp(int amount);
+	void Loot(int count = 3); // 빈 슬롯부터 count만큼 아이템 획득 => 인벤토리 저장과 출력
 	
 };
