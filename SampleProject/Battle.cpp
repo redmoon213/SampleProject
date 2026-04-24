@@ -59,9 +59,16 @@ bool Battle::Run()
         }
         isFirstTurn = false;
     }
+    DisplayResult();
 	return player.isAlive();
+    
 }
 
+Battle::~Battle()
+{
+    std::cout<<"Battle destroy\n";
+    system("pause");
+}
 
 void Battle::DisplayScreen()
 {
@@ -77,10 +84,10 @@ void Battle::DisplayScreen()
     std::cout << "|                                              |\n";
     std::cout << "|      (o_o)  < \"Gimme your gold!\"             |\n";
     std::cout << "|      /| |\\                                   |\n";
-    std::cout << "|       | |            [A Goblin Approaches]   |\n";
+    std::cout << "|       | |            [A "<<monster.GetName()<<" Approaches]   |\n";
     std::cout << "|----------------------------------------------|\n";
     DrawGauge("PLAYER", player.get_hp(), player.get_max_hp());
-    DrawGauge("GOBLIN", monster.get_hp(), monster.get_max_hp());
+    DrawGauge(monster.GetName(), monster.get_hp(), monster.get_max_hp());
     std::cout << "|----------------------------------------------|\n";
     std::cout << "|  1. Attack                                   |\n";
     std::cout << "|  2. Critical Attack!                         |\n";
@@ -126,8 +133,9 @@ void Battle::DisplayResult()
     {
         std::cout << "#               V I C T O R Y !                #\n";
         std::cout << "################################################\n";
+        player.Loot();
+        player.GainExp(monster.GetExpReward());
     }
+    system("pause");
     
-    player.Loot();
-    player.GainExp(monster.GetExpReward());
 }

@@ -4,7 +4,7 @@
 #include<ctime>
 #include<iomanip>
 #include <windows.h>
-
+#include <vector>
 #include "Battle.h"
 #include"Monster.h"
 #include"Player.h"
@@ -120,12 +120,27 @@ int main() {
 	system("pause > nul");
 
 	// [SCENE 3: Battle]
-	Monster goblin1(50,0, 15, 0, 150);
-	//vector<Monster>monsters();
+	Monster goblin1("goblin1",50,0, 15, 0, 100);
+	vector<Monster>	monsters = {
+		Monster("goblin2",50,0, 15, 0, 100),
+		Monster("skelleton1",30,0, 10, 0, 75),
+		Monster("orc1",50,0, 25, 0, 200),
+		Monster("zombie1",50,0, 40, 0, 400)
+	};
 	Battle battle1(player, goblin1);
 	
-	battle1.Run();
-	battle1.DisplayResult();
+	for (Monster& monster : monsters)
+	{
+		
+		Battle battle2(player, monster);
+		battle2.Run();
+			
+		//battle2.DisplayResult();
+		if (!player.isAlive())break;
+		
+	}
+	//battle1.Run();
+	//battle1.DisplayResult();
 
 	system("pause");
 	
