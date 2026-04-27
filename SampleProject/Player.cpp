@@ -3,12 +3,29 @@
 #include<iomanip>
 #include<iostream>
 //using namespace std;
+Player::Player(const std::string& name, const std::string& characterClass, bool isHardcore, 
+	int str, int dex, int vit, int eng) : Character(str, dex, vit, eng, 1),
+name(name), characterClass(characterClass), isHardcore(isHardcore),
+exp(0), expToNextLevel(100)
+{
+	maxHp = vitality * 3;
+	hp = maxHp;
+	maxMp = energy * 2;
+	mp = maxMp;
+		
+	attackDamage = (float)strength * 0.2;
+	attackSpeed = (float)dexterity * 0.1;
+	movingSpeed = (float)dexterity / 30.0;
+}
+
 
 Player::Player(const std::string& name, const std::string& characterClass, bool isHardcore)
 : Character(50, 50, 50, 50, 1), 
 name(name),characterClass(characterClass), isHardcore(isHardcore),
 exp(0), expToNextLevel(100)
-    {}
+{
+	
+}
 
 
 int Player::CriticalAttack() const {return (int)attackDamage*2;}

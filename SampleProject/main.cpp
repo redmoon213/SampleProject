@@ -5,9 +5,13 @@
 #include<iomanip>
 #include <windows.h>
 #include <vector>
+
+#include "Barbarian.h"
 #include "Battle.h"
+#include "FireGoblin.h"
 #include"Monster.h"
 #include"Player.h"
+#include "Sorceress.h"
 
 
 using namespace std;
@@ -38,15 +42,6 @@ void drawGauge(string label, int current, int max) {
 	// 수치 부분 7칸 + 테두리 마무리
 	cout << "] " << right << setw(5) << current << "/" << left << setw(4) << max << " |\n";
 }
-
-
-////call by adress 실습을 위한 함수 작성
-//void LevelUp(int* level) {
-//	(*level)++;				//역참조를 통해 level 원본 데이터의 값을 1올려줌
-//	
-//}
-
-//class 실습. 몬스터 class 작성
 
 
 int main() {
@@ -94,9 +89,22 @@ int main() {
 	isHardcore = (isHardcoreInput == '1');
 	
 	//정보 입력 후 플레이어 객체 생성 세부 스탯은 내부에서 자동 계산
-	Player player(userName, charactorClass, isHardcore);
+	//Player player(userName, charactorClass, isHardcore);
+	Player* playerPtr = nullptr;
+	if (classChoiceInput == 3)
+	{
+		playerPtr = new Barbarian(userName, isHardcore);
+	}
+	else if (classChoiceInput == 7)
+	{
+		playerPtr = new Sorceress(userName, isHardcore);
+	}
+	else
+	{
+		playerPtr = new Player(userName, charactorClass, isHardcore);
+	}
 	
-	
+	Player& player = *playerPtr;
 	// [SCENE 2: Status Window]
 	clearScreen();
 	cout << "################################################\n";
@@ -120,28 +128,25 @@ int main() {
 	system("pause > nul");
 
 	// [SCENE 3: Battle]
-	Monster goblin1("goblin1",50,0, 15, 0, 100);
-	vector<Monster>	monsters = {
-		Monster("goblin2",50,0, 15, 0, 100),
-		Monster("skelleton1",30,0, 10, 0, 75),
-		Monster("orc1",50,0, 25, 0, 200),
-		Monster("zombie1",50,0, 40, 0, 400)
-	};
-	Battle battle1(player, goblin1);
 	
-	for (Monster& monster : monsters)
+	vector<Monster*>	monsters = {
+		new Monster("Goblin",50,0, 15, 0, 100),
+		new FireGoblin("FireGoblin",50, 0, 15, 0, 50)
+	};
+	//vector<Monster> monsters2 ;
+	//monsters2.push_back(Monster ("goblin2",50,0, 15, 0, 100));
+	for (Monster* monster : monsters)
 	{
-		
-		Battle battle2(player, monster);
+		Battle battle2(player, *monster);
 		battle2.Run();
-			
-		//battle2.DisplayResult();
 		if (!player.isAlive())break;
 		
 	}
-	//battle1.Run();
-	//battle1.DisplayResult();
-
+	for (Monster* index : monsters)
+	{
+		delete index;
+	}
+	delete playerPtr;
 	system("pause");
 	
 	return 0;

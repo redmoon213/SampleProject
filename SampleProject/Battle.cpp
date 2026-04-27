@@ -15,11 +15,12 @@ bool Battle::Run()
         DisplayScreen();
         if (action == 1) {
 			
-            std::cout << "\n >> You dealt " << player.get_attack_damage() << " damage to Goblin!\n";
+            
+            std::cout << "\n" << player.GetAttackMessage() <<" >> You dealt " << player.get_attack_damage() << " damage to " << monster.GetName() <<"!\n";
             if (monster.isAlive()) {
 				
 				
-                std::cout << " >> Goblin counter-attacks! You take " << monster.Attack()<< " damage.\n";
+                std::cout << " >> " << monster.GetName() << " counter-attacks! You take " << monster.Attack()<< " damage.\n";
             }
         }
         //고쳐야겠다 이거 
@@ -43,6 +44,7 @@ bool Battle::Run()
         if (action == 1) {
             monster.TakeDamage(player.get_attack_damage());
             if (monster.isAlive()) {
+                
                 player.TakeDamage(monster.Attack());
             }
         }
@@ -59,6 +61,7 @@ bool Battle::Run()
         }
         isFirstTurn = false;
     }
+    
     DisplayResult();
 	return player.isAlive();
     
@@ -122,7 +125,7 @@ void Battle::DisplayResult()
     
     // [SCENE 4: Result]
    
-    std::cout << "################################################\n";
+         std::cout << "################################################\n";
     if (!player.isAlive()) {
          std::cout << "#                                              #\n";
          std::cout << "#                Y O U  D I E D                #\n";

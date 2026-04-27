@@ -14,8 +14,14 @@ private:
 	int exp, expToNextLevel;
 	//인벤토리
 	std::vector<int> inventory;
+protected:
+	// 자식 클래스의 스탯을 직접 지정할 때 사용되는 생성자.
+	Player(const std::string& name, const std::string& characterClass, bool isHardcore, 
+		int str, int dex, int vit, int eng);
 public:
 	Player(const std::string& name, const std::string& characterClass, bool isHardcore);
+	
+	
 	//Getter
 	std::string get_name() const{return name;}
 	std::string get_character_class() const{return characterClass;}
@@ -30,5 +36,7 @@ public:
 	void PrintLevel() const;
 	void GainExp(int amount);
 	void Loot(int count = 3); // 빈 슬롯부터 count만큼 아이템 획득 => 인벤토리 저장과 출력
+	
+	virtual std::string GetAttackMessage() const {return "";}
 	
 };
