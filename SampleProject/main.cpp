@@ -145,8 +145,10 @@ int main() {
 	for (Monster* index : monsters)
 	{
 		delete index;
+		index = nullptr;
 	}
 	delete playerPtr;
+	playerPtr = nullptr;
 	system("pause");
 	
 	return 0;
