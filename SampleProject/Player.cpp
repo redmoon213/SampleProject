@@ -2,6 +2,8 @@
 #include<string>
 #include<iomanip>
 #include<iostream>
+
+#include "Item.h"
 //using namespace std;
 Player::Player(const std::string& name, const std::string& characterClass, bool isHardcore, 
 	int str, int dex, int vit, int eng) : Character(str, dex, vit, eng, 1),
@@ -62,27 +64,28 @@ void Player::GainExp(int amount)
 	}
 }
 
-void Player::Loot(int count)
+void Player::Loot(std::unique_ptr<Item> item)
 {
 	srand((unsigned int)time(NULL));
-	std::cout << "| [LOOT FOUND]                                 |\n";
-	for (int i =0; i< count; i++)
-	{
-		inventory.push_back(rand()%4 +1);
-	}
-		
-	for (int i = 0; i<inventory.size(); i++)
-	{
-		std::string itemName;
-		if (inventory[i] == 1) itemName = "Gold";
-		else if (inventory[i]== 2) itemName = "Healing Potion";
-		else if (inventory[i] == 3) itemName = "Weapon";
-		else if (inventory[i] == 4) itemName = "Armor";
-		else itemName = "Empty";
-		
-		std::cout << "|>Slot " << i << "|" << std::setw(38) << itemName << "| \n";
-	}
-	
+	inventory.push_back(*item);
+	std::cout << "| [LOOT FOUND]                                 |\n"; //나중에 Loot함수 호출전에 쓰는게 나을거같음
+	std::cout << item->GetItemName() << std::endl;
 	std::cout << "################################################\n";
+}
+
+void Player::PrintInventory()
+{
+	std:: cout << "| [Inventory]                                 |\n";
+	
+	
+	for (int i =0; i<inventory.size(); i++)
+	{
+		std::string typeString;
+		if (inventory[i].GetItemType() == ItemType::Weapon) typeString = "Weapon";
+		else if (inventory[i].GetItemType() == ItemType::Armor) typeString ="Aromor";
+		else typeString = "Consumable";
+		
+		std::cout << i+1 << "_" << inventory[i].GetItemName() << "\n";
+	}
 	
 }

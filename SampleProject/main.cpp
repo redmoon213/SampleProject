@@ -51,6 +51,7 @@ int main() {
 	char isHardcoreInput;
 	bool isHardcore = true;
 
+	
 	// [SCENE 1: Character Creation]
 	clearScreen();
 	cout << "################################################\n";
@@ -139,7 +140,6 @@ int main() {
 		Battle battle2(player, *monster);
 		battle2.Run();
 		if (!player.isAlive())break;
-		
 	}
 	
 	system("pause");

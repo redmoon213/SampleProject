@@ -136,7 +136,20 @@ void Battle::DisplayResult()
     {
         std::cout << "#               V I C T O R Y !                #\n";
         std::cout << "################################################\n";
-        player.Loot();
+        std::unique_ptr<Item> droppedItem = monster.DropItem();
+        if (droppedItem)
+        {
+            std::cout<<"<드롭>" << droppedItem->GetItemName() << "가 바닥에 떨어졌습니다.\n";
+            player.Loot(std::move(droppedItem));
+            std::cout<<"<TEST> droppedItem이 nullptr되었나?|" << (droppedItem == nullptr ? "Yes" : "No") << "\n";
+        }
+        
+        else
+        {
+            std::cout<<"<드롭> 아무것도 떨어지지 않았습니다...\n";
+        }
+        
+        player.PrintInventory();
         player.GainExp(monster.GetExpReward());
     }
     system("pause");
