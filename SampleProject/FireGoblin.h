@@ -9,5 +9,5 @@ public:
     int Attack() const override;
     std::string GetAttackMessage() const override {return "화염속성 공격!";}
     
-    
+    std::unique_ptr<Item> DropItem() const override;
 };

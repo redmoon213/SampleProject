@@ -48,7 +48,7 @@ bool Battle::Run()
                 player.TakeDamage(monster.Attack());
             }
         }
-
+    
         else if (action == 2) {
             monster.TakeDamage(player.CriticalAttack());
             if (monster.isAlive()) {

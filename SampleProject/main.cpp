@@ -131,7 +131,7 @@ int main() {
 	
 	vector<unique_ptr<Monster>>monsters;
 	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100));
-	monsters.push_back(make_unique<Monster>("FireGoblin",50,0, 15, 0, 100));
+	monsters.push_back(make_unique<FireGoblin>("FireGoblin",50,0, 15, 0, 100));
 		
 	//vector<Monster> monsters2 ;
 	//monsters2.push_back(Monster ("goblin2",50,0, 15, 0, 100));

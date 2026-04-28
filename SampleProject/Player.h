@@ -31,14 +31,14 @@ public:
 	bool is_is_hardcore() const{return isHardcore;}
 	int get_exp() const{return exp;}
 	int get_expTotalLevel() const{return expToNextLevel;}
-	//std::vector<int> GetInventory()	{return inventory;}
+	std::vector<Item> GetInventory() const {return inventory;}
 	//함수부분
 	int CriticalAttack() const; 
 	void LevelUp();
 	void PreviewCritical() const;
 	void PrintLevel() const;
 	void GainExp(int amount);
-	void Loot(std::unique_ptr<Item>); // 빈 슬롯부터 count만큼 아이템 획득 => 인벤토리 저장과 출력
+	void Loot(std::unique_ptr<Item>); 
 	
 	virtual std::string GetAttackMessage() const {return "";}
 	
