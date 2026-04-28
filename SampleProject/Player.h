@@ -20,7 +20,7 @@ protected:
 		int str, int dex, int vit, int eng);
 public:
 	Player(const std::string& name, const std::string& characterClass, bool isHardcore);
-	
+	~Player();
 	
 	//Getter
 	std::string get_name() const{return name;}

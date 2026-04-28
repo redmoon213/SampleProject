@@ -27,6 +27,10 @@ exp(0), expToNextLevel(100)
 	
 }
 
+Player::~Player()
+{
+	std::cout<<"<플레이어 소멸자 호출>\n";
+}
 
 int Player::CriticalAttack() const {return (int)attackDamage*2;}
 
