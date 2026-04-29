@@ -18,6 +18,8 @@ exp(0), expToNextLevel(100)
 	attackDamage = (float)strength * 0.2;
 	attackSpeed = (float)dexterity * 0.1;
 	movingSpeed = (float)dexterity / 30.0;
+	
+	inventory.reserve(10);
 }
 
 
@@ -27,6 +29,7 @@ name(name),characterClass(characterClass), isHardcore(isHardcore),
 exp(0), expToNextLevel(100)
 {
 	
+	inventory.reserve(10);
 }
 
 Player::~Player()
@@ -71,6 +74,9 @@ void Player::Loot(std::unique_ptr<Item> item)
 	std::cout << "| [LOOT FOUND]                                 |\n"; //나중에 Loot함수 호출전에 쓰는게 나을거같음
 	std::cout << item->GetItemName() << std::endl;
 	std::cout << "################################################\n";
+
+	std::cout<<"<Loot()> 인벤토리 size : " << inventory.size()
+		<< "인벤토리 Capacity : "  << inventory.capacity() << std::endl;
 }
 
 void Player::PrintInventory()

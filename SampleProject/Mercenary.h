@@ -17,7 +17,7 @@ public:
     
     std::string GetName() const {return name;}
     int Attack() const {return attackDamage;}
-    bool IsOwnerAlive() const {return owner.expired();}
+    bool IsOwnerAlive() const {return !owner.expired();}
     
     
 };
