@@ -27,3 +27,8 @@ void Character::TakeDamage(int damage)
 int Character::Attack() const{return (int)attackDamage;}
 
 bool Character::isAlive() const{return hp>0;}
+
+void Character::Heal(int amount)
+{
+    hp = std::min(hp+amount, maxHp);
+}

@@ -42,4 +42,6 @@ public:
 	bool isAlive() const;
 	virtual int Attack() const;
 	void TakeDamage(int damage);
+	
+	void Heal(int amount);
 };

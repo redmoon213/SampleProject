@@ -84,6 +84,19 @@ bool Battle::Run()
                 monster.TakeDamage(mercenary->Attack());
             }
         }
+        
+        else if (action == 3)
+        {
+            if (player.UseItem("HealingPotion"))
+            {
+                logMessage = "=> Healing Potion을 사용했습니다." + std::to_string(player.get_hp()) + " / " + std::to_string(player.get_max_hp());
+            }
+            
+            else
+            {
+                logMessage = "=> Healing Potion이 존재하지 않습니다.";
+            }
+        }
         else
         {
             player.TakeDamage(monster.Attack());
@@ -123,7 +136,10 @@ void Battle::DisplayScreen()
     std::cout << "|----------------------------------------------|\n";
     std::cout << "|  1. Attack                                   |\n";
     std::cout << "|  2. Critical Attack!                         |\n";
+    std::cout << "|  3. Use Item                                 |\n";
     std::cout << "################################################\n";
+    
+    std::cout << logMessage <<std::endl;
 }
 
 

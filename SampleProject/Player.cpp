@@ -20,6 +20,7 @@ exp(0), expToNextLevel(100)
 	movingSpeed = (float)dexterity / 30.0;
 	
 	inventory.reserve(10);
+	inventory.push_back(Item("HealingPotion", ItemType::Consumable));
 }
 
 
@@ -30,6 +31,7 @@ exp(0), expToNextLevel(100)
 {
 	
 	inventory.reserve(10);
+	inventory.push_back(Item("HealingPotion", ItemType::Consumable));
 }
 
 Player::~Player()
@@ -92,4 +94,25 @@ void Player::PrintInventory()
 		
 		std::cout<< "| Slot_" << ++outputIndex << ">>" << it.GetItemName() << std::endl;
 	}
+}
+
+bool Player::UseItem(const std::string& itemName)
+{
+	for (auto it = inventory.begin(); it!=inventory.end(); ++it)
+	{
+		if (it->GetItemName() == itemName)
+		{
+			if (it->GetItemType() == ItemType::Consumable)
+			{
+				Heal(maxHp);     
+				
+				it = inventory.erase(it);
+				std::cout<<"<UseItem()> 아이템 사용 후 size : " << inventory.size() 
+					<< "capacity : " << inventory.capacity() << std::endl;
+				return true;
+			}
+		}
+	}
+		
+	return false;
 }

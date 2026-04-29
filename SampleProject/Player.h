@@ -47,4 +47,6 @@ public:
 	virtual std::string GetAttackMessage() const {return "";}
 	
 	void PrintInventory();
+	
+	bool UseItem(const std::string& itemName);
 };
