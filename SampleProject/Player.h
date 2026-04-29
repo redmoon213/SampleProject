@@ -5,6 +5,7 @@
 #include "Character.h"
 #include "Item.h"
 
+class Mercenary;  //전방선언
 //Character 클래스를 상속받은 Player 클래스
 class Player : public Character
 {
@@ -32,6 +33,9 @@ public:
 	int get_exp() const{return exp;}
 	int get_expTotalLevel() const{return expToNextLevel;}
 	std::vector<Item> GetInventory() const {return inventory;}
+	
+	//플레이어가 용병 참조
+	std::shared_ptr<Mercenary> companion;
 	//함수부분
 	int CriticalAttack() const; 
 	void LevelUp();

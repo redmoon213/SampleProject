@@ -9,6 +9,7 @@
 #include "Barbarian.h"
 #include "Battle.h"
 #include "FireGoblin.h"
+#include "Mercenary.h"
 #include "Monster.h"
 #include "Player.h"
 #include "Sorceress.h"
@@ -89,22 +90,31 @@ int main() {
 	isHardcore = (isHardcoreInput == '1');
 	
 	//정보 입력 후 플레이어 객체 생성 세부 스탯은 내부에서 자동 계산
-	//Player player(userName, charactorClass, isHardcore);
-	unique_ptr<Player> playerPtr;
+	shared_ptr<Player> playerPtr;
 	if (classChoiceInput == 3)
 	{
-		playerPtr = make_unique<Barbarian>(userName, isHardcore);//new Barbarian(userName, isHardcore);
+		playerPtr = make_shared<Barbarian>(userName, isHardcore);//new Barbarian(userName, isHardcore);
 	}
 	else if (classChoiceInput == 7)
 	{
-		playerPtr = make_unique<Sorceress>(userName, isHardcore);// new Sorceress(userName, isHardcore);
+		playerPtr = make_shared<Sorceress>(userName, isHardcore);// new Sorceress(userName, isHardcore);
 	}
 	else
 	{
-		playerPtr = make_unique<Player>(userName, charactorClass, isHardcore);//new Player(userName, charactorClass, isHardcore);
+		playerPtr = make_shared<Player>(userName, charactorClass, isHardcore);//new Player(userName, charactorClass, isHardcore);
 	}
 	
 	Player& player = *playerPtr;
+	
+	shared_ptr<Mercenary>mercPtr = make_shared<Mercenary>("Rogue", 10, playerPtr);
+	player.companion = mercPtr; // Player와 Mercenary 연결 (순환참조 발생)
+	
+	cout<<"<UseCount> playerPtr 참조 수 : " << playerPtr.use_count() << endl;
+	cout<<"<UseCount> mercenaryPtr 참조 수 : " << mercPtr.use_count() << endl;
+	//서로 참조하고 있어서 소멸자가 나타나지 않음. 
+	
+	system("pasue");
+	
 	// [SCENE 2: Status Window]
 	clearScreen();
 	cout << "################################################\n";
@@ -137,7 +147,7 @@ int main() {
 	//monsters2.push_back(Monster ("goblin2",50,0, 15, 0, 100));
 	for (auto& monster : monsters)
 	{
-		Battle battle2(player, *monster);
+		Battle battle2(player, *monster, mercPtr);
 		battle2.Run();
 		if (!player.isAlive())break;
 	}

@@ -87,5 +87,4 @@ void Player::PrintInventory()
 		
 		std::cout << i+1 << "_" << inventory[i].GetItemName() << "\n";
 	}
-	
 }

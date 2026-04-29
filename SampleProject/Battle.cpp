@@ -1,8 +1,11 @@
 ﻿#include "Battle.h"
 #include <iostream>
 #include<iomanip>
-Battle::Battle(Player& player, Monster& monster):
-player(player), monster(monster), logMessage("Battle Start")
+
+#include "Mercenary.h"
+
+Battle::Battle(Player& player, Monster& monster, std::shared_ptr<Mercenary> merc):
+player(player), monster(monster), logMessage("Battle Start"), mercenary(merc)
 {}
 
 bool Battle::Run()
@@ -17,9 +20,10 @@ bool Battle::Run()
 			
             
             std::cout << "\n" << player.GetAttackMessage() <<" >> You dealt " << player.get_attack_damage() << " damage to " << monster.GetName() <<"!\n";
+            std::cout << "\n" << ">> " << mercenary->GetName() << " dealt "  << mercenary->Attack() << " Damage to " << monster.GetName() << "!\n";
+            
+            
             if (monster.isAlive()) {
-				
-				
                 std::cout << " >> " << monster.GetName() << " counter-attacks! You take " << monster.Attack()<< " damage.\n";
             }
         }
@@ -43,16 +47,29 @@ bool Battle::Run()
 
         if (action == 1) {
             monster.TakeDamage(player.get_attack_damage());
+            
             if (monster.isAlive()) {
                 
                 player.TakeDamage(monster.Attack());
             }
+            
+            if (mercenary && monster.isAlive())
+            {
+                monster.TakeDamage(mercenary->Attack());
+            }
+            
+            
         }
     
         else if (action == 2) {
             monster.TakeDamage(player.CriticalAttack());
             if (monster.isAlive()) {
                 player.TakeDamage(monster.Attack());
+            }
+            
+            if (mercenary && monster.isAlive())
+            {
+                monster.TakeDamage(mercenary->Attack());
             }
         }
         else
