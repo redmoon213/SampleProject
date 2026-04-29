@@ -67,12 +67,11 @@ void Player::GainExp(int amount)
 	}
 }
 
-void Player::Loot(std::unique_ptr<Item> item)
+void Player::Loot(Item item)
 {
-	srand((unsigned int)time(NULL));
-	inventory.push_back(*item);
+	inventory.emplace_back(std::move(item));
 	std::cout << "| [LOOT FOUND]                                 |\n"; //나중에 Loot함수 호출전에 쓰는게 나을거같음
-	std::cout << item->GetItemName() << std::endl;
+	std::cout << item.GetItemName() << std::endl;
 	std::cout << "################################################\n";
 
 	std::cout<<"<Loot()> 인벤토리 size : " << inventory.size()
@@ -83,14 +82,14 @@ void Player::PrintInventory()
 {
 	std:: cout << "| [Inventory]                                 |\n";
 	
-	
-	for (int i =0; i<inventory.size(); i++)
+	int outputIndex = 0;
+	for (const auto& it : inventory)
 	{
 		std::string typeString;
-		if (inventory[i].GetItemType() == ItemType::Weapon) typeString = "Weapon";
-		else if (inventory[i].GetItemType() == ItemType::Armor) typeString ="Aromor";
-		else typeString = "Consumable";
+		if (it.GetItemType() == ItemType::Weapon) typeString = "Weapon";
+		if (it.GetItemType() == ItemType::Armor) typeString = "Armor";
+		if (it.GetItemType() == ItemType::Consumable) typeString = "Consumable";
 		
-		std::cout << i+1 << "_" << inventory[i].GetItemName() << "\n";
+		std::cout<< "| Slot_" << ++outputIndex << ">>" << it.GetItemName() << std::endl;
 	}
 }

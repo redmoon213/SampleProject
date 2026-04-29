@@ -169,8 +169,8 @@ void Battle::DisplayResult()
         if (droppedItem)
         {
             std::cout<<"<드롭>" << droppedItem->GetItemName() << "가 바닥에 떨어졌습니다.\n";
-            player.Loot(std::move(droppedItem));
-            std::cout<<"<TEST> droppedItem이 nullptr되었나?|" << (droppedItem == nullptr ? "Yes" : "No") << "\n";
+            player.Loot(std::move(*droppedItem));
+           // std::cout<<"<TEST> droppedItem이 nullptr되었나?|" << (droppedItem == nullptr ? "Yes" : "No") << "\n";
         }
         
         else

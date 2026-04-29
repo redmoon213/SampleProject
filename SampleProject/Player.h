@@ -42,7 +42,7 @@ public:
 	void PreviewCritical() const;
 	void PrintLevel() const;
 	void GainExp(int amount);
-	void Loot(std::unique_ptr<Item>); 
+	void Loot(Item item); 
 	
 	virtual std::string GetAttackMessage() const {return "";}
 	
