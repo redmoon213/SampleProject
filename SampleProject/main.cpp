@@ -109,11 +109,11 @@ int main() {
 	shared_ptr<Mercenary>mercPtr = make_shared<Mercenary>("Rogue", 10, playerPtr);
 	player.companion = mercPtr; // Player와 Mercenary 연결 (순환참조 발생)
 	
-	cout<<"<UseCount> playerPtr 참조 수 : " << playerPtr.use_count() << endl;
+	cout<<"\n <UseCount> playerPtr 참조 수 : " << playerPtr.use_count() << endl;
 	cout<<"<UseCount> mercenaryPtr 참조 수 : " << mercPtr.use_count() << endl;
 	//서로 참조하고 있어서 소멸자가 나타나지 않음. 
 	
-	system("pasue");
+	system("pause");
 	
 	// [SCENE 2: Status Window]
 	clearScreen();
