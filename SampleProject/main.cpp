@@ -113,6 +113,9 @@ int main() {
 	cout<<"<UseCount> mercenaryPtr 참조 수 : " << mercPtr.use_count() << endl;
 	//서로 참조하고 있어서 소멸자가 나타나지 않음. 
 	
+	
+	
+	
 	system("pause");
 	
 	// [SCENE 2: Status Window]
@@ -142,7 +145,7 @@ int main() {
 	vector<unique_ptr<Monster>>monsters;
 	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100));
 	monsters.push_back(make_unique<FireGoblin>("FireGoblin",50,0, 15, 0, 100));
-		
+	
 	//vector<Monster> monsters2 ;
 	//monsters2.push_back(Monster ("goblin2",50,0, 15, 0, 100));
 	for (auto& monster : monsters)

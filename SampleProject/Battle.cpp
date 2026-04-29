@@ -11,6 +11,18 @@ player(player), monster(monster), logMessage("Battle Start"), mercenary(merc)
 bool Battle::Run()
 {
     int action = 0;
+    
+    //lock() : weak_ptr에서 임시로 shared_ptr을 생성해서 반환, 대상이 없으면 nullptr반환
+    if (mercenary)
+    {
+        auto ownerPtr = mercenary->owner.lock();
+        if (ownerPtr)
+        {
+            std::cout<< "<" << mercenary->GetName() << "> : " << ownerPtr->get_name() << " 님을 위해 싸우겠습니다.\n";
+            system("pause");
+        }
+    }
+    
     bool isFirstTurn = true;
     
     while (monster.isAlive() && player.isAlive()) {
