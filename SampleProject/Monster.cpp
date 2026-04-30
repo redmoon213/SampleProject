@@ -1,31 +1,17 @@
 ﻿#include "Monster.h"
 #include <iostream>
 //생성자
-Monster::Monster(const std::string& name, int str, int dex, int vit, int eng, int expReward, int lv)
-    :Character(str, dex, vit, eng, lv), name(name), expReward(expReward)
-{
-    //std::cout << "<몬스터 생성> [ " << name << " ]\n";
-    
-}
+Monster::Monster(const std::string& name, int str, int dex, int vit, int eng, int expReward, int lv, std::vector<int> dropInput )
+    :Character(str, dex, vit, eng, lv), name(name), expReward(expReward), dropPool(dropInput)
+{}
 //소멸자
-Monster::~Monster()
-{
-    //std::cout << "<몬스터 소멸> [" << name << "]\n";
-}
+Monster::~Monster(){}
 
-std::unique_ptr<Item> Monster::DropItem() const
+int Monster::DropItem() const
 {
     srand(time(NULL));
-    if (rand()%2 == 0) return nullptr;
     
-    int itemRoll = rand() %3;
-    if (itemRoll==0) return std::make_unique<Item>("Sort Sword", ItemType::Weapon);
+    if (dropPool.empty() || rand() % 3 == 0) return -1;
     
-    
-    else if (itemRoll==1) return std::make_unique<Item>("Leather Armor",ItemType::Armor);
-    
-    
-    else if (itemRoll ==2) return std::make_unique<Item>("Healing Potion", ItemType::Consumable);
-    
-   // return std::make_unique<Item>(itemReward);
+    else return dropPool[rand()%dropPool.size()];
 }

@@ -3,12 +3,14 @@
 #include<cstdlib>
 #include<ctime>
 #include<iomanip>
+#include <unordered_map>
 #include <windows.h>
 #include <vector>
 
 #include "Barbarian.h"
 #include "Battle.h"
 #include "FireGoblin.h"
+#include "ItemData.h"
 #include "Mercenary.h"
 #include "Monster.h"
 #include "Player.h"
@@ -89,6 +91,8 @@ int main() {
 	cin >> isHardcoreInput;
 	isHardcore = (isHardcoreInput == '1');
 	
+	
+	
 	//정보 입력 후 플레이어 객체 생성 세부 스탯은 내부에서 자동 계산
 	shared_ptr<Player> playerPtr;
 	if (classChoiceInput == 3)
@@ -109,9 +113,6 @@ int main() {
 	shared_ptr<Mercenary>mercPtr = make_shared<Mercenary>("Rogue", 10, playerPtr);
 	player.companion = mercPtr; // Player와 Mercenary 연결 (순환참조 발생)
 	
-	cout<<"\n <UseCount> playerPtr 참조 수 : " << playerPtr.use_count() << endl;
-	cout<<"<UseCount> mercenaryPtr 참조 수 : " << mercPtr.use_count() << endl;
-	//서로 참조하고 있어서 소멸자가 나타나지 않음. 
 	
 	
 	
@@ -142,12 +143,15 @@ int main() {
 
 	// [SCENE 3: Battle]
 	
+	//아이템 DB생성
 	vector<unique_ptr<Monster>>monsters;
-	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100));
-	monsters.push_back(make_unique<FireGoblin>("FireGoblin",50,0, 15, 0, 100));
+	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{101, 102, 201, 203}));
+	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{201, 102, 201, 303}));
+	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{103, 102, 401, 101}));
+	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{403, 402, 401, 403}));
+	monsters.push_back(make_unique<FireGoblin>("FireGoblin",100,0, 15, 0, 100, 1, vector<int>{203, 303, 401,}));
 	
-	//vector<Monster> monsters2 ;
-	//monsters2.push_back(Monster ("goblin2",50,0, 15, 0, 100));
+	
 	for (auto& monster : monsters)
 	{
 		Battle battle2(player, *monster, mercPtr);

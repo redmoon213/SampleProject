@@ -11,6 +11,4 @@ Item::Item(std::string name, ItemType type):name(name), type(type)
 }
 
 Item::~Item()
-{
-    std::cout<<"<Item 소멸 | "<< name <<">" << std::endl;
-}
+{}

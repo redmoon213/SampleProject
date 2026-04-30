@@ -4,10 +4,8 @@
 class FireGoblin : public Monster
 {
 public:
-    FireGoblin(const std::string& name, int str, int dex, int vit, int eng, int expReward, int lv=1);
+    FireGoblin(const std::string& name, int str, int dex, int vit, int eng, int expReward, int lv=1, std::vector<int>dropItemInput ={});
     
     int Attack() const override;
     std::string GetAttackMessage() const override {return "화염속성 공격!";}
-    
-    std::unique_ptr<Item> DropItem() const override;
 };

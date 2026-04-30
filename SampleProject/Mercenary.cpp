@@ -8,5 +8,4 @@ Mercenary::Mercenary(std::string nameInput, int atkDamageInput, std::shared_ptr<
 
 Mercenary::~Mercenary()
 {
-    std::cout << "<용병 소멸> \n";
 }

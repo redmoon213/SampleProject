@@ -1,7 +1,9 @@
 ﻿#include "Battle.h"
 #include <iostream>
 #include<iomanip>
+#include <unordered_map>
 
+#include "ItemData.h"
 #include "Mercenary.h"
 
 Battle::Battle(Player& player, Monster& monster, std::shared_ptr<Mercenary> merc):
@@ -167,7 +169,9 @@ void Battle::DisplayResult()
 #else
     system("clear");
 #endif
-    
+
+    std::unordered_map<int, ItemData> itemDB = CreateItemDB();
+	
     // [SCENE 4: Result]
    
          std::cout << "################################################\n";
@@ -181,11 +185,17 @@ void Battle::DisplayResult()
     {
         std::cout << "#               V I C T O R Y !                #\n";
         std::cout << "################################################\n";
-        std::unique_ptr<Item> droppedItem = monster.DropItem();
-        if (droppedItem)
+        
+        
+        
+        int droppedItemNum = monster.DropItem();
+        
+        
+        if (droppedItemNum != -1)
         {
-            std::cout<<"<드롭>" << droppedItem->GetItemName() << "가 바닥에 떨어졌습니다.\n";
-            player.Loot(std::move(*droppedItem));
+            Item droppedItem(itemDB[droppedItemNum].itemName, itemDB[droppedItemNum].type);
+            std::cout<<"<드롭>" << itemDB[droppedItemNum].itemName << "가 바닥에 떨어졌습니다.\n";
+            player.Loot(droppedItem);
            // std::cout<<"<TEST> droppedItem이 nullptr되었나?|" << (droppedItem == nullptr ? "Yes" : "No") << "\n";
         }
         
