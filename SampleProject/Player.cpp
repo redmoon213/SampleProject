@@ -1,4 +1,6 @@
 ﻿#include "Player.h"
+
+#include <algorithm>
 #include<string>
 #include<iomanip>
 #include<iostream>
@@ -113,4 +115,14 @@ bool Player::UseItem(const std::string& itemName)
 	}
 		
 	return false;
+}
+
+void Player::SortInventory()
+{
+	std::sort(
+		inventory.begin(), inventory.end(),
+		[](const Item& a, const Item& b)
+		{return a.GetItemName() < b.GetItemName();});//a가 b보다 앞에 오면 true => 오름차순
+			
+	std::cout <<"<인벤토리 이름정렬 완료>\n";
 }

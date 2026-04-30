@@ -108,10 +108,10 @@ int main() {
 		playerPtr = make_shared<Player>(userName, charactorClass, isHardcore);//new Player(userName, charactorClass, isHardcore);
 	}
 	
+	//플레이어와 용병 객체 생성
 	Player& player = *playerPtr;
-	
 	shared_ptr<Mercenary>mercPtr = make_shared<Mercenary>("Rogue", 10, playerPtr);
-	player.companion = mercPtr; // Player와 Mercenary 연결 (순환참조 발생)
+	player.companion = mercPtr; 
 	
 	
 	
@@ -145,6 +145,8 @@ int main() {
 	
 	//아이템 DB생성
 	vector<unique_ptr<Monster>>monsters;
+	
+	//몬스터 생성
 	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{101, 102, 201, 203}));
 	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{201, 102, 201, 303}));
 	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{103, 102, 401, 101}));

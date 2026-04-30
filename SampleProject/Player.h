@@ -49,4 +49,6 @@ public:
 	void PrintInventory();
 	
 	bool UseItem(const std::string& itemName);
+	
+	void SortInventory();
 };

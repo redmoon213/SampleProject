@@ -113,7 +113,6 @@ bool Battle::Run()
 
 Battle::~Battle()
 {
-    std::cout<<"Battle destroy\n";
     system("pause");
 }
 
@@ -203,7 +202,8 @@ void Battle::DisplayResult()
         {
             std::cout<<"<드롭> 아무것도 떨어지지 않았습니다...\n";
         }
-        
+        player.PrintInventory();
+        player.SortInventory();
         player.PrintInventory();
         player.GainExp(monster.GetExpReward());
     }
