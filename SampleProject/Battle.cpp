@@ -7,8 +7,11 @@
 #include "Mercenary.h"
 
 Battle::Battle(Player& player, Monster& monster, std::shared_ptr<Mercenary> merc):
-player(player), monster(monster), logMessage("Battle Start"), mercenary(merc)
-{}
+player(player), monster(monster), battleLog(5), mercenary(merc)
+{
+    battleLog.push("<System>::Battle Start");
+    
+}
 
 bool Battle::Run()
 {
@@ -33,8 +36,8 @@ bool Battle::Run()
         if (action == 1) {
 			
             
-            std::cout << "\n" << player.GetAttackMessage() <<" >> You dealt " << player.get_attack_damage() << " damage to " << monster.GetName() <<"!\n";
-            std::cout << "\n" << ">> " << mercenary->GetName() << " dealt "  << mercenary->Attack() << " Damage to " << monster.GetName() << "!\n";
+            battleLog.push(player.GetAttackMessage() + " >> You dealt " + std::to_string(player.get_attack_damage()) + " damage to " + monster.GetName() +"!\n");
+            battleLog.push( ">> " + mercenary->GetName() + " dealt "  + std::to_string(mercenary->Attack()) + " Damage to " + monster.GetName() + "!\n");
             
             
             if (monster.isAlive()) {
@@ -45,15 +48,14 @@ bool Battle::Run()
         //입력으로 2를 받았을 때 크리티컬 데미지를 적용
         else if (action == 2) {
 
-            std::cout << "\n >>Critical Hit!!!>> You dealt " << player.CriticalAttack()<< " damage to Goblin!\n";
-			
+            battleLog.push("\n >>Critical Hit!!!>> You dealt " + std::to_string(player.CriticalAttack()) + " damage to Goblin!\n");
             if (monster.isAlive()) {
-                std::cout << " >> Goblin counter-attacks! You take " << monster.Attack()<< " damage.\n";
+                battleLog.push(" >> Goblin counter-attacks! You take " + std::to_string(monster.Attack()) +  " damage.\n");
             }
         }
 		
         else if(isFirstTurn!=true){
-            std::cout << "\n >> You hesitated! Goblin attacks you! (-" << monster.Attack()<<" HP)\n";
+            battleLog.push("\n >> You hesitated! Goblin attacks you! (-" + std::to_string(monster.Attack()) + " HP)\n");
         }
 
         std::cout << " > Action: ";
@@ -91,12 +93,12 @@ bool Battle::Run()
         {
             if (player.UseItem("HealingPotion"))
             {
-                logMessage = "=> Healing Potion을 사용했습니다." + std::to_string(player.get_hp()) + " / " + std::to_string(player.get_max_hp());
+                battleLog.push("=> Healing Potion을 사용했습니다." + std::to_string(player.get_hp()) + " / " + std::to_string(player.get_max_hp()));
             }
             
             else
             {
-                logMessage = "=> Healing Potion이 존재하지 않습니다.";
+                battleLog.push("=> Healing Potion이 존재하지 않습니다.");
             }
         }
         else
@@ -140,7 +142,7 @@ void Battle::DisplayScreen()
     std::cout << "|  3. Use Item                                 |\n";
     std::cout << "################################################\n";
     
-    std::cout << logMessage <<std::endl;
+    battleLog.printAll();
 }
 
 

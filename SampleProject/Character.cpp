@@ -10,9 +10,10 @@ fireResist(0), coldResist(0), lightningResist(0), poisonResist(0)   // 고정값
     maxMp = energy * 2;
     mp = maxMp;
 		
-    attackDamage = (float)strength * 0.2;
-    attackSpeed = (float)dexterity * 0.1;
-    movingSpeed = (float)dexterity / 30.0;
+    attackDamage =  (float)(strength * 0.2);
+    attackSpeed =   (float)(dexterity * 0.1);
+    movingSpeed =   (float)(dexterity / 30.0);
+
 }
 Character::~Character()
 {

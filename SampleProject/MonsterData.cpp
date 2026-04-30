@@ -10,5 +10,7 @@ std::unordered_map<std::string, MonsterData> createMonsterDB()
     db["FireGoblin"] =  {40,10,20,0,20,{101, 102, 201, 202, 301}};
     db["Ghost"] =       {10,0,10,50,20,{401, 403}};
     db["LastBoss"] =    {70,70,70,70,100,{101, 102, 103, 201, 202, 203, 301, 302, 303, 401, 402, 403}};
+    
     return db;
+
 }
