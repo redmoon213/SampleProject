@@ -98,6 +98,19 @@ void Player::PrintInventory()
 
 bool Player::UseItem(const std::string& itemName)
 {
+	auto it = std::find_if(inventory.begin(), inventory.end(),
+			[&itemName](const Item& item){return item.GetItemName() == itemName;});
+	if (it != inventory.end())
+	{
+		if (it->GetItemType() == ItemType::Consumable)
+		{
+			Heal(maxHp);
+			inventory.erase(it);
+			return true;
+		}
+	}	
+	
+	/*
 	for (auto it = inventory.begin(); it!=inventory.end(); ++it)
 	{
 		if (it->GetItemName() == itemName)
@@ -112,7 +125,7 @@ bool Player::UseItem(const std::string& itemName)
 				return true;
 			}
 		}
-	}
+	}*/
 		
 	return false;
 }

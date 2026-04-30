@@ -6,10 +6,9 @@ std::unordered_map<int, ItemData> CreateItemDB()
 {
     //100번대는 Consumable / 200번대는 Weapon / 300번대는 Armor / 400번대는 ETC
     std::unordered_map<int, ItemData> db;
-    db[101] = {"Healing Potion", ItemType::Consumable};
-    db[102] = {"Mana Potion", ItemType::Consumable};
-    db[103] = {"StoneSkin Potion", ItemType::Consumable};
-    db[104] = {"Healing Potion", ItemType::Consumable};
+    db[101] = {"HealingPotion", ItemType::Consumable};
+    db[102] = {"ManaPotion", ItemType::Consumable};
+    db[103] = {"StoneSkinPotion", ItemType::Consumable};
     
     db[201] = {"Wood Swrod", ItemType::Weapon};
     db[202] = {"Iron Spear", ItemType::Weapon};
