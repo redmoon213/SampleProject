@@ -1,4 +1,4 @@
-﻿/*#pragma once
+﻿#pragma once
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -13,6 +13,6 @@ struct MonsterData
     
 };
 
-std::unordered_map<std::string, MonsterData> createMonsterDB(); //몬스터 DB 생성 함수*/
+std::unordered_map<std::string, MonsterData> createMonsterDB(); //몬스터 DB 생성 함수
 
 

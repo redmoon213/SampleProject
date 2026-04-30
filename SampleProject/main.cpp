@@ -13,6 +13,7 @@
 #include "ItemData.h"
 #include "Mercenary.h"
 #include "Monster.h"
+#include "MonsterData.h"
 #include "Player.h"
 #include "Sorceress.h"
 
@@ -145,13 +146,25 @@ int main() {
 	
 	//아이템 DB생성
 	vector<unique_ptr<Monster>>monsters;
+	unordered_map<string, MonsterData> monsterDB= createMonsterDB();
 	
 	//몬스터 생성
-	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{101, 102, 201, 203}));
+	auto& goblin = monsterDB["Goblin"];
+	auto& ghost = monsterDB["Ghost"];
+	auto& fireGoblin = monsterDB["FireGoblin"];
+	auto& lastBoss = monsterDB["LastBoss"];
+	
+	monsters.push_back(make_unique<Monster>("Goblin",goblin));
+	monsters.push_back(make_unique<Monster>("Ghost",ghost));
+	monsters.push_back(make_unique<Monster>("FireGoblin",fireGoblin));
+	monsters.push_back(make_unique<Monster>("LastBoss",lastBoss));
+	
+	/*monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{101, 102, 201, 203}));
 	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{201, 102, 201, 303}));
 	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{103, 102, 401, 101}));
 	monsters.push_back(make_unique<Monster>("Goblin",50,0, 15, 0, 100,1, vector<int>{403, 402, 401, 403}));
 	monsters.push_back(make_unique<FireGoblin>("FireGoblin",100,0, 15, 0, 100, 1, vector<int>{203, 303, 401,}));
+	*/
 	
 	
 	for (auto& monster : monsters)

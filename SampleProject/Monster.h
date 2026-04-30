@@ -4,6 +4,7 @@
 
 #include "Character.h"
 #include "Item.h"
+#include "MonsterData.h"
 
 class Monster : public Character
 {
@@ -17,6 +18,7 @@ private:
 public:
     Monster(const std::string& name,int str, int dex, int vit, int eng, 
         int expReward, int lv=1, std::vector<int> dropPool = {});
+    Monster(const std::string& name, const MonsterData& mData, int lv=1);
     virtual ~Monster();
     
     int GetExpReward() const {return expReward;}

@@ -109,23 +109,6 @@ bool Player::UseItem(const std::string& itemName)
 			return true;
 		}
 	}	
-	
-	/*
-	for (auto it = inventory.begin(); it!=inventory.end(); ++it)
-	{
-		if (it->GetItemName() == itemName)
-		{
-			if (it->GetItemType() == ItemType::Consumable)
-			{
-				Heal(maxHp);     
-				
-				it = inventory.erase(it);
-				std::cout<<"<UseItem()> 아이템 사용 후 size : " << inventory.size() 
-					<< "capacity : " << inventory.capacity() << std::endl;
-				return true;
-			}
-		}
-	}*/
 		
 	return false;
 }
