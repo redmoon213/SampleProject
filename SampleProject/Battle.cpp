@@ -3,6 +3,7 @@
 #include<iomanip>
 #include <unordered_map>
 
+#include "GameInstance.h"
 #include "ItemData.h"
 #include "Mercenary.h"
 
@@ -170,8 +171,8 @@ void Battle::DisplayResult()
 #else
     system("clear");
 #endif
-
-    std::unordered_map<int, ItemData> itemDB = CreateItemDB();
+    GameInstance& gameInstance = GameInstance::GetGameInstance();
+    auto& itemDB = gameInstance.itemDB;
 	
     // [SCENE 4: Result]
    

@@ -10,8 +10,6 @@ struct ItemData
 {
     std::string itemName;
     ItemType type;
-    
-
 };
 
 std::unordered_map<int, ItemData> CreateItemDB();

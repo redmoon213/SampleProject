@@ -115,9 +115,9 @@ int main() {
 	shared_ptr<Mercenary>mercPtr = make_shared<Mercenary>("Rogue", 10, playerPtr);
 	player.companion = mercPtr; 
 	
-	GameInstance& gameInstance = GameInstance::GetGameInstance(); //생성자 호출 (no1)
-	GameInstance& gameInstance2 = GameInstance::GetGameInstance();
-	GameInstance& gameInstance3 = GameInstance::GetGameInstance();
+	GameInstance& gameInstance = GameInstance::GetGameInstance(); 
+	GameInstance& gameInstance2 = GameInstance::GetGameInstance();  
+	GameInstance& gameInstance3 = GameInstance::GetGameInstance();  // 여러번 가져오더라도 인스턴스는 딱 하나만 존재함 
 	
 	cout<<"[Singleton 주소값 검증] 1차 = " << &gameInstance << endl;
 	cout<<"[Singleton 주소값 검증] 2차 = " << &gameInstance2 << endl;
