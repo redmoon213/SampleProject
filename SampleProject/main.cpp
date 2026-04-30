@@ -10,6 +10,7 @@
 #include "Barbarian.h"
 #include "Battle.h"
 #include "FireGoblin.h"
+#include "GameInstance.h"
 #include "ItemData.h"
 #include "Mercenary.h"
 #include "Monster.h"
@@ -114,11 +115,22 @@ int main() {
 	shared_ptr<Mercenary>mercPtr = make_shared<Mercenary>("Rogue", 10, playerPtr);
 	player.companion = mercPtr; 
 	
+	GameInstance& gameInstance = GameInstance::GetGameInstance(); //생성자 호출 (no1)
+	GameInstance& gameInstance2 = GameInstance::GetGameInstance();
+	GameInstance& gameInstance3 = GameInstance::GetGameInstance();
 	
-	
-	
+	cout<<"[Singleton 주소값 검증] 1차 = " << &gameInstance << endl;
+	cout<<"[Singleton 주소값 검증] 2차 = " << &gameInstance2 << endl;
+	cout<<"[Singleton 주소값 검증] 3차 = " << &gameInstance3 << endl;
 	
 	system("pause");
+	
+	//ItemDB 메인에 생성
+	auto& itemDB = gameInstance.itemDB;
+	auto& monsterDB = gameInstance.monsterDB;
+	
+	
+	
 	
 	// [SCENE 2: Status Window]
 	clearScreen();
@@ -146,7 +158,7 @@ int main() {
 	
 	//아이템 DB생성
 	vector<unique_ptr<Monster>>monsters;
-	unordered_map<string, MonsterData> monsterDB= createMonsterDB();
+	//unordered_map<string, MonsterData> monsterDB= createMonsterDB();
 	
 	//몬스터 생성
 	auto& goblin = monsterDB["Goblin"];
